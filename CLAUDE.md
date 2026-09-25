@@ -83,7 +83,7 @@ function. Contract, as given by the AIOS agent on 17 September 2026:
 - **Payment.** Card fields belong to the provider. The hosted step slots in at
   the marked comment in `components/TicketCheckout.tsx`.
 - **SMS.** A Malaysian long code cannot originate automated traffic. WhatsApp
-  runs in HighLevel; AIOS holds the record.
+  runs from AIOS on Twilio; see Email sequences below.
 - **Session recording.** Off for this site in `site_tracking_config`. Leave it
   off until there is a privacy page.
 
@@ -100,3 +100,42 @@ The Vercel MCP tools take file contents inline, which is fine for code but not f
 
 ## Hero video (added 25 Sep 2026)
 MEDIA.V1 plays public/media/hero-mobile.mp4 on screens up to 700px and hero-desktop.mp4 above that; Media.tsx picks one after mount so each device downloads only its own file, with the matching poster still underneath. Both are generated interim footage. Replace with real Bunker shoot footage using the same file names, kept under ~2MB each (H.264, no audio track, faststart).
+
+## Email sequences
+
+The sender lives in AIOS (Supabase project imovvalxcypylkbtrbeb), not in this
+repo: cookout-email-tick, cookout_due_emails, cookout_email_steps,
+cookout_email_sends, cookout_buyers, cookout-postmark-webhook.
+
+### WhatsApp (added 25 Sep 2026 by the AIOS agent)
+
+- **Targeting is one function for both channels.** cookout_due_messages(now,
+  channel) holds every rule; cookout_due_emails(now) is now a wrapper over it
+  with the same signature and output (the whole email projection, every 10
+  minutes from 25 Sep to 11 Oct, hashed identical before and after). Change a
+  rule there once and both channels follow.
+- **WhatsApp steps are rows in cookout_email_steps** with channel "whatsapp":
+  wa_ticket_link, wa_eb_tomorrow, wa_youre_in, wa_tomorrow. They are only due
+  once wa_approval is "approved" and wa_content_sid is set, and only for
+  contacts with the whatsapp-optin tag, an E.164 phone and no whatsapp row in
+  contacts_opted_out. Quiet hours (09:00 to 20:59 MYT) apply to the dated
+  steps as well. wa_tomorrow is inactive until the address, gate and parking
+  lines are in cookout_whatsapp_config (venue_line, parking_line).
+- **The ticket link is a button, not a variable.** Meta rejects a template
+  whose body ends in a variable, so cookout_ticket_link and
+  cookout_eb_tomorrow carry a "Get Your Ticket" URL button to the checkout
+  with utm_source=whatsapp. The only variable in any template is the first
+  name.
+- **cookout-whatsapp-tick** (cron at :03 every 10 minutes) sends; it is off
+  and in dry run, and cookout_whatsapp_config.from_number is empty until The
+  Cookout's own number is registered. It never sends from a Lani AI number.
+  Template actions: create_templates, submit_templates, sync_templates (cron
+  hourly at :17).
+- **cookout-whatsapp-webhook** takes replies and delivery receipts. Replies
+  become inbound WhatsApp rows on the contact's Conversations thread. A bare
+  STOP, unsubscribe, cancel, quit, opt out, remove me or berhenti removes
+  whatsapp-optin and writes contacts_opted_out (channel whatsapp). It answers
+  204 with no body on purpose: Twilio would send any text reply to the guest.
+- Email and WhatsApp keep separate send logs and separate gaps, so a contact
+  opted in to both gets the ticket link on both about 30 minutes after they
+  sign up. That is by design of the handover, not an accident.
