@@ -1,0 +1,7 @@
+# /preregister and / are open: WhatsApp, Facebook and Instagram link preview
+# crawlers read robots.txt, and a blanket Disallow stops them generating a
+# preview card at all.
+# /tables and /thanks stay blocked while they still carry [PLACEHOLDER] copy.
+User-agent: *
+Disallow: /tables
+Disallow: /thanks
