@@ -139,3 +139,30 @@ cookout_email_sends, cookout_buyers, cookout-postmark-webhook.
 - Email and WhatsApp keep separate send logs and separate gaps, so a contact
   opted in to both gets the ticket link on both about 30 minutes after they
   sign up. That is by design of the handover, not an accident.
+
+### Moved into AIOS Workflows (25 Sep 2026, on Donny's instruction)
+
+- **The sequences now run as 2 workflows in the AIOS CRM Workflow builder**,
+  The Cookout: Welcome (forms preregister and ticket-order, ends on purchase)
+  and The Cookout: Buyers (tag ticket-buyer). Every email body and WhatsApp
+  template above was copied from cookout_email_steps by migration
+  cookout_sequences_as_workflows; the timing is the same. Edit copy or timing
+  in the builder from now on, not in cookout_email_steps.
+- **cookout-email-tick and cookout-whatsapp-tick are unscheduled** and
+  cookout_email_config and cookout_whatsapp_config are enabled false, dry_run
+  true, so nobody can be messaged twice. The tables, functions and
+  cookout_due_messages stay for the record. The hourly template sync
+  (cookout-whatsapp-templates, cookout-whatsapp-tick sync_templates) still runs
+  and mirrors Meta approval onto crm_whatsapp_templates, which is what the
+  workflow reads.
+- **The sender is crm_client_senders** (one row for The Cookout): Postmark
+  token name COOKOUT_POSTMARK_TOKEN, from_email empty, whatsapp_from_number
+  empty, enabled false. Nothing sends until Donny fills those in and turns
+  enabled on. Consent is crm_contact_send_guard at the moment of sending: the
+  same tags (whatsapp-optin, unsubscribed, no-sequences) and contacts_opted_out
+  rows as before.
+- **What changed in behaviour.** One send log now (ai_messages, Conversations)
+  instead of cookout_email_sends and cookout_whatsapp_sends. Sends are spaced
+  3 hours apart per channel (min_gap_minutes 180). A dated send that a person
+  reaches more than 6 hours late is skipped (expires_at). The price line is a
+  dated merge field on the workflow (RM 65 until 2 Oct 23:59 MYT, then RM 85).
