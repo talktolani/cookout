@@ -1,5 +1,5 @@
 'use client'
-import { CSSProperties, useEffect, useState } from 'react'
+import { CSSProperties, useEffect, useRef, useState } from 'react'
 import { MEDIA } from '@/content/event'
 
 type Props = {
@@ -15,20 +15,6 @@ type Props = {
   fill?: boolean
 }
 
-/**
- * One component for every media slot.
- *
- * Resolution order:
- *   1. an explicit src prop, if a page passes one
- *   2. MEDIA[slot] in content/event.ts
- *   3. a labelled placeholder carrying the shot brief
- *
- * So adding media is pasting a URL into the manifest. Nothing else changes.
- *
- * srcMobile is art direction, not responsive sizing. A 16:9 frame centre
- * cropped to 9:16 loses whatever the shot was actually about, so the portrait
- * version is a separate crop rather than the same file squeezed.
- */
 export default function Media({
   slot, spec, brief, src, poster, ratio = '16/9', ig, className = '', style, fill,
 }: Props) {
@@ -42,18 +28,36 @@ export default function Media({
     ? { position: 'absolute', inset: 0, ...style }
     : { aspectRatio: ratio, ...style }
 
-  // Video art direction. Phones and desktops get separate cuts, and each
-  // device downloads only its own file. The choice needs matchMedia, so it
-  // happens after mount; until then the matching poster still is shown, which
-  // is also what a slow connection or a reduced-motion setting keeps seeing.
   const stillMobile = m?.posterMobile
   const [videoSrc, setVideoSrc] = useState<string | null>(null)
+  const [playing, setPlaying] = useState(false)
+  const videoRef = useRef<HTMLVideoElement>(null)
   const isVideoSlot = /\.(mp4|webm|mov|m3u8)(\?|$)/i.test(url)
   useEffect(() => {
     if (!isVideoSlot) return
     const small = window.matchMedia('(max-width: 700px)').matches
     setVideoSrc(small && mobile ? mobile : url)
   }, [isVideoSlot, mobile, url])
+
+  // Autoplay can be refused (iOS Low Power Mode). The video stays invisible
+  // until it is actually playing, so the poster shows instead; a first tap
+  // anywhere retries.
+  useEffect(() => {
+    const v = videoRef.current
+    if (!v || !videoSrc) return
+    let retry: (() => void) | null = null
+    v.play().catch(() => {
+      retry = () => { v.play().catch(() => {}) }
+      document.addEventListener('touchstart', retry, { once: true, passive: true })
+      document.addEventListener('click', retry, { once: true })
+    })
+    return () => {
+      if (retry) {
+        document.removeEventListener('touchstart', retry)
+        document.removeEventListener('click', retry)
+      }
+    }
+  }, [videoSrc])
 
   if (url) {
     const isVideo = isVideoSlot
@@ -68,6 +72,7 @@ export default function Media({
           )}
           {videoSrc && (
             <video
+              ref={videoRef}
               key={videoSrc}
               src={videoSrc}
               autoPlay
@@ -75,8 +80,11 @@ export default function Media({
               loop
               playsInline
               preload="auto"
+              disablePictureInPicture
+              controls={false}
               aria-hidden="true"
-              className="media-video-layer"
+              onPlaying={() => setPlaying(true)}
+              className={`media-video-layer${playing ? ' is-playing' : ''}`}
             />
           )}
         </div>

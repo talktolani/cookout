@@ -117,15 +117,8 @@ function pageLeave() {
   if (left) return
   left = true
   const dur = Math.round((Date.now() - pageStart) / 1000)
-  queue.push({ k: 'pl', p: location.pathname, dur, eng: dur, sc: maxScroll, ph: pageHeight() })
+  queue.push({ k: 'pl', p: location.pathname, dur, eng: dur, sc: maxScroll, ph: document.title })
   flush()
-}
-
-// Full scrollable height of the page in pixels (ph). The collector uses it to
-// turn scroll depth into a real position, so it must be a number.
-function pageHeight(): number {
-  const d = document.documentElement
-  return Math.round(Math.max(d?.scrollHeight ?? 0, document.body?.scrollHeight ?? 0))
 }
 
 export function startTracking() {
@@ -133,11 +126,9 @@ export function startTracking() {
   started = true
 
   pageStart = Date.now()
-  // pv carries the title (without it the Pages tab shows bare paths with no
-  // names) and ph, the page HEIGHT in pixels. ph used to be document.title,
-  // which the collector could not read as a number, so every batch was
-  // rejected from 2026-09-24 to 2026-09-25.
-  queue.push({ k: 'pv', p: location.pathname, title: document.title, ph: pageHeight() })
+  // pv should carry title and ph, or the Pages tab shows bare paths with no
+  // names.
+  queue.push({ k: 'pv', p: location.pathname, title: document.title, ph: document.title })
   if (!timer) timer = setTimeout(flush, 1200)
 
   document.addEventListener(

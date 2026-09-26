@@ -18,7 +18,7 @@ export default function Home() {
           <Media
             slot="V1 · HERO LOOP"
             spec="16:9 desktop / 9:16 mobile · 15-20s · muted autoplay loop"
-            brief="Full bleed, behind everything. Smoke off the grill, a padel rally, dominoes hitting the table, the room at dusk, the DJ after dark. Cut so the last frame is the fullest. Loops seamlessly."
+            brief="Full bleed, behind everything."
             fill
           />
           <div className="hero-scrim" />
@@ -88,7 +88,7 @@ export default function Home() {
             <Media
               slot="P1 · WELCOME DRINK"
               spec="4:5 still"
-              brief="The included drink in hand, venue soft behind it. Makes the ticket read as something you receive."
+              brief="The included drink in hand, venue soft behind it."
               ratio="4/5"
             />
           </div>

@@ -88,13 +88,6 @@ export default function RegisterForm() {
         <label htmlFor="wants_tournament">I want to play in the tournament</label>
       </div>
 
-      {/*
-        WhatsApp requires opt-in before a business may message someone.
-        A list collected without it cannot be messaged later and there is no
-        way to go back and ask. Never pre-tick, never bundle into terms.
-        Marketing consent is a separate permission and a separate template
-        category, so it gets its own box.
-      */}
       <div className="optin">
         <div className="check">
           <input id="wa" type="checkbox" checked={wa} onChange={(e) => setWa(e.target.checked)} />

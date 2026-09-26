@@ -11,8 +11,8 @@
  * has to clear roughly 1.43x the Early Bird price to be worth the same as a
  * pre-sale ticket. Against RM 65 that floor is about RM 93. RM 100 for the
  * door, floated by the venue partner, clears it. GA has no floor of its own,
- * only needs to sit between the two: RM 85 is a working suggestion, not a
- * decision. Both need Donny before the full funnel can ship.
+ * only needs to sit between the two. Donny confirmed RM 85 General Admission
+ * and RM 100 at the door on 25 Sep.
  */
 export const TICKETS = {
   earlyBird: {
@@ -27,72 +27,35 @@ export const TICKETS = {
   },
   ga: {
     name: 'General Admission',
-    price: 'RM [__]',
+    price: 'RM 85',
     note: 'From 3 October, online, until the night before.',
   },
-  door: { name: 'At The Door', price: 'RM [__]', note: 'On the night, at the venue.' },
+  door: { name: 'At The Door', price: 'RM 100', note: 'On the night, at the venue.' },
 } as const
 
-/**
- * Every fact and every line of copy lives here.
- * Edit this file to change the site. Do not edit copy inside components.
- *
- * Anything wrapped in [SQUARE BRACKETS] is a confirmed gap, not a guess.
- * It renders in orange on the page so it cannot ship by accident.
- */
-
-/**
- * MEDIA MANIFEST
- *
- * This is the only place you add media. Paste a URL next to a slot and that
- * slot stops being a placeholder and starts playing. Delete the URL and the
- * placeholder comes back. No component changes, no page changes.
- *
- * A URL can be anything publicly reachable:
- *   - a Cloudflare Stream or R2 link
- *   - a Higgsfield download link, if it is public and stable
- *   - a local file you have committed to public/media/hero.mp4
- *
- * Video: mp4, H.264, no audio track, under about 5MB for anything that
- * autoplays. Stills: jpg or webp.
- *
- * `poster` is the still shown before a video loads. Worth setting on V1 and V8,
- * because on a slow connection the poster is what people actually see.
- */
 export const MEDIA: Record<string, { src?: string; srcMobile?: string; poster?: string; posterMobile?: string }> = {
-  // Landing
-  // Placeholder still while the hero loop is generated. When the mp4 lands,
-  // move this jpg to `poster` and put the video in `src`.
-  // Hero loop, generated interim footage (25 Sep). Replace with real
-  // footage from the Bunker shoot, same file names, when it exists.
   V1: {
-    src: '/media/hero-desktop.mp4',
-    srcMobile: '/media/hero-mobile.mp4',
-    poster: '/media/hero-desktop-poster.jpg',
-    posterMobile: '/media/hero-mobile-poster.jpg',
+    src: 'https://d2ol7oe51mr4n9.cloudfront.net/user_3BCuYCQwnreJpxyBr1ZoHKJc0Ay/d61bd346-ba99-499a-8366-4d05127001e5.mp4',
+    srcMobile: 'https://d2ol7oe51mr4n9.cloudfront.net/user_3BCuYCQwnreJpxyBr1ZoHKJc0Ay/f052c702-bfee-41db-b487-d6727efa133f.mp4',
+    poster: 'https://d2ol7oe51mr4n9.cloudfront.net/user_3BCuYCQwnreJpxyBr1ZoHKJc0Ay/23eade15-9f21-4aca-9a55-d184c704fbd4.png',
+    posterMobile: 'https://d2ol7oe51mr4n9.cloudfront.net/user_3BCuYCQwnreJpxyBr1ZoHKJc0Ay/120898dc-154a-41df-ab62-167facf9dd68.png',
   },
-  V2: { src: '' },               // the food
-  V3: { src: '' },               // the games
-  V4: { src: '' },               // the music
-  V5: { src: '' },               // venue walkthrough
-  V6: { src: '' },               // spare
-  V7: { src: '' },               // how to get here
-  P1: { src: '' },               // welcome drink still
-
-  // Carousel, refreshed weekly during the runway
+  V2: { src: '' },
+  V3: { src: '' },
+  V4: { src: '' },
+  V5: { src: '' },
+  V6: { src: '' },
+  V7: { src: '' },
+  P1: { src: '' },
   S1: { src: '' }, S2: { src: '' }, S3: { src: '' },
   S4: { src: '' }, S5: { src: '' }, S6: { src: '' },
-
-  // Tables
-  V8: { src: '', poster: '' },   // set table hero
-  P2: { src: '' },               // position 1
-  P3: { src: '' },               // position 2
-  P4: { src: '' },               // position 3
-  G1: { src: '' },               // floor plan graphic
-
-  // Thank you
-  V9: { src: '' },               // Shaggz to camera
-  V10: { src: '' },              // share clip
+  V8: { src: '', poster: '' },
+  P2: { src: '' },
+  P3: { src: '' },
+  P4: { src: '' },
+  G1: { src: '' },
+  V9: { src: '' },
+  V10: { src: '' },
 }
 
 export const EVENT = {
@@ -102,22 +65,18 @@ export const EVENT = {
   doors: '4PM',
   close: 'midnight',
   timeRange: '4PM until midnight',
+  dateShort: 'Saturday, Oct 10',
+  timeShort: '4PM - 12AM',
   venue: 'Bunker 1965',
   city: 'Kuala Lumpur',
   address: '[ADDRESS]',
-  doorPrice: 'RM [__]',
+  doorPrice: 'RM 100',
   calendar: {
     start: '20261010T160000',
     end: '20261011T000000',
   },
 } as const
 
-/**
- * Exactly 2 CTAs in the hero, which is the pattern every major venue page
- * uses. Buying is primary. The free guest list is the fallback for anyone not
- * ready to pay, and it still captures the WhatsApp opt-in, which is the real
- * asset. Tables get their own section rather than a third hero button.
- */
 export const HERO = {
   eyebrow: 'KUALA LUMPUR',
   headline: 'Barbecue, games, pickleball, and a sound system.',
@@ -205,23 +164,12 @@ export const CAROUSEL = {
   ],
 }
 
-/**
- * Edition 001 targets. Confirmed with Donny 7 September 2026.
- *
- * Venue capacity is 3,000 across the hall, courts, turf and mezzanine. That is
- * a fire-code number, not a target. The target for Edition 001 is 400 in the
- * room, filling the hall and the courts first.
- *
- * Registration is free and payment is at the door, so registrations are not
- * attendees. The show rate below is an assumption, not data. Edition 001 is
- * what establishes the real number, and every figure here recalculates from it.
- */
 export const TARGETS = {
   attendees: 400,
   assumedShowRate: 0.4,
-  fromTables: 80,          // roughly 10 tables, paid, near certain to show
-  fromTournament: 32,      // full bracket of 16 pairs, high commitment
-  freeRegistrations: 720,  // to yield the remaining 288 at a 40% show rate
+  fromTables: 80,
+  fromTournament: 32,
+  freeRegistrations: 720,
   costPerRegistrationTarget: 'RM 6 to 10',
   costPerRegistrationCeiling: 'RM 14',
 } as const
@@ -267,7 +215,6 @@ export const FAQ = [
   { q: 'What happens if it rains?', a: '[NEEDS ANSWER: is the space covered?]' },
 ]
 
-/** Table tiers. Named for position, not product. No prices on the browse section. */
 export const TABLES = {
   hero: {
     heading: 'Tables and VIP',
@@ -281,7 +228,7 @@ export const TABLES = {
   tiers: [
     {
       slot: 'P2',
-      name: '[PACKAGE 1 — NAME IT FOR THE POSITION]',
+      name: '[PACKAGE 1: NAME IT FOR THE POSITION]',
       price: 'RM [___]',
       seats: '[__]',
       body: '[One or two lines describing where this table physically sits in the room and who it suits.]',
@@ -297,7 +244,7 @@ export const TABLES = {
     },
     {
       slot: 'P3',
-      name: '[PACKAGE 2 — NAME IT FOR THE POSITION]',
+      name: '[PACKAGE 2: NAME IT FOR THE POSITION]',
       price: 'RM [___]',
       seats: '[__]',
       body: '[One or two lines describing where this table physically sits in the room and who it suits.]',
@@ -314,7 +261,7 @@ export const TABLES = {
     },
     {
       slot: 'P4',
-      name: '[PACKAGE 3 — NAME IT FOR THE POSITION]',
+      name: '[PACKAGE 3: NAME IT FOR THE POSITION]',
       price: 'RM [___]',
       seats: '[__]',
       body: '[One or two lines describing where this table physically sits in the room and who it suits.]',

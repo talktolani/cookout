@@ -1,0 +1,15 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//The Cookout//thecookoutevent.com//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:the-cookout-001@thecookoutevent.com
+DTSTAMP:20260925T000000Z
+DTSTART:20261010T080000Z
+DTEND:20261010T160000Z
+SUMMARY:The Cookout
+LOCATION:Bunker 1965\, Kuala Lumpur
+DESCRIPTION:Barbecue\, games\, pickleball and a sound system. https://thecookoutevent.com
+END:VEVENT
+END:VCALENDAR

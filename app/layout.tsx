@@ -14,27 +14,19 @@ const montserrat = Montserrat({
 
 export const metadata: Metadata = {
   formatDetection: { telephone: false, address: false, date: false },
-  title: 'The Cookout — Barbecue, Games, And A Sound System',
-  description: `${EVENT.date}, ${EVENT.timeRange}, at ${EVENT.venue} in ${EVENT.city}. Registration is free. Entry is ${EVENT.doorPrice} at the door and your first drink is on us.`,
+  title: 'The Cookout: Barbecue, Games, And A Sound System',
+  description: `${EVENT.dateShort}, ${EVENT.timeShort} at ${EVENT.venue}, ${EVENT.city}. Barbecue, games, pickleball and a sound system. Pre-register free for the cheapest tickets.`,
   metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL ?? 'https://example.invalid'),
   openGraph: {
     title: 'The Cookout',
-    description: `${EVENT.date}, ${EVENT.timeRange}, ${EVENT.venue}. Barbecue, games and a sound system.`,
+    description: `${EVENT.dateShort} | ${EVENT.timeShort} at ${EVENT.venue}, ${EVENT.city}. Barbecue, games, pickleball and a sound system.`,
     type: 'website',
-    // 4:5 key visual, the same shape as the flyer and the same shape TAO uses.
-    images: [{ url: '/og.jpg', width: 1080, height: 1350 }],
+    // The share image is drawn by app/opengraph-image.tsx at build time.
   },
+  twitter: { card: 'summary_large_image' },
 }
 
-export const viewport: Viewport = { themeColor: '#0D1226' }
-
-// iOS Safari auto-links anything it reads as an address, phone number or date,
-// which underlines the venue line in the hero. That is turned off by
-// formatDetection inside the metadata object above, which is the only place
-// the App Router accepts it. A standalone `export const formatDetection` used
-// to sit here as well: Next rejects it outright ("not a valid Layout export
-// field") and the build failed on it, so the duplicate is gone and the
-// working one stays.
+export const viewport: Viewport = { themeColor: '#000000', viewportFit: 'cover' }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (

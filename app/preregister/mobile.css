@@ -1,0 +1,26 @@
+html:has(.squeeze),body:has(.squeeze){background:#000}
+main.squeeze{min-height:100vh;min-height:100lvh}
+main.squeeze .sq-form input:focus{outline:none;border-color:rgba(246,240,226,.55)}
+main.squeeze .sq-row{flex-direction:row;align-items:stretch;gap:8px}
+main.squeeze .sq-form .sq-row input{flex:1 1 auto;min-width:0;text-align:left}
+main.squeeze .sq-btn{width:auto;flex:0 0 auto}
+@media(max-width:700px){
+  main.squeeze{align-items:flex-start}
+  main.squeeze .sq-inner{min-height:100vh;min-height:100svh;display:flex;padding:calc(env(safe-area-inset-top,0px) + 20px) 0 20px}
+  main.squeeze .sq-inner .wrap{display:flex;flex-direction:column;flex:1 1 auto;width:100%;justify-content:space-evenly;gap:14px}
+  main.squeeze .eyebrow,main.squeeze .mark,main.squeeze .sq-head,main.squeeze .facts,main.squeeze .sq-offer,main.squeeze .sq-count,main.squeeze .sq-form,main.squeeze .sq-done,main.squeeze .sq-trust{margin-top:0;margin-bottom:0}
+  main.squeeze .facts{max-width:none}
+  main.squeeze .sq-form input[type=text],main.squeeze .sq-form input[type=tel],main.squeeze .sq-form input[type=email]{padding:15px 18px}
+  main.squeeze .sq-btn{padding:0 22px;font-size:15px}
+  main.squeeze .sq-benefits{margin-top:16px}
+  html.kb-open main.squeeze .sq-inner{min-height:0;padding:16px 0 0}
+  html.kb-open main.squeeze .sq-inner .wrap{justify-content:flex-start;gap:0}
+}
+@keyframes cookout-flicker{
+  0%,18%,22%,25%,53%,57%,100%{text-shadow:0 0 .024em rgba(255,255,255,.3),0 0 .065em rgba(255,255,255,.3),0 0 .11em rgba(255,255,255,.3),0 0 .24em rgba(139,230,67,.3),0 0 .48em rgba(139,230,67,.3),0 0 .54em rgba(139,230,67,.3),0 0 .6em rgba(139,230,67,.3),0 0 .9em rgba(139,230,67,.3)}
+  20%,24%,55%{text-shadow:none}
+}
+main.squeeze .mark .out{text-shadow:0 0 .024em rgba(255,255,255,.3),0 0 .065em rgba(255,255,255,.3),0 0 .11em rgba(255,255,255,.3),0 0 .24em rgba(139,230,67,.3),0 0 .48em rgba(139,230,67,.3),0 0 .54em rgba(139,230,67,.3),0 0 .6em rgba(139,230,67,.3),0 0 .9em rgba(139,230,67,.3);animation:cookout-flicker 3s infinite alternate}
+@media(prefers-reduced-motion:reduce){main.squeeze .mark .out{animation:none}}
+main.squeeze .sq-head{text-transform:uppercase;letter-spacing:.005em;line-height:1.12}
+main.squeeze .facts{text-transform:uppercase;letter-spacing:.08em}

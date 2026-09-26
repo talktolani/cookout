@@ -27,29 +27,8 @@ function utm() {
   return out
 }
 
-/**
- * One endpoint for every form: AIOS site-form-capture.
- *
- * The client is chosen by the crm_forms row, never by this body. An unknown
- * form key is a 404. Origin must be thecookoutevent.com or www.
- *
- * `_hp` travels inside `fields` as a honeypot. Anything in it means a bot and
- * the endpoint answers 200 while writing nothing.
- *
- * WHAT THIS DOES NOT DO: there is no HighLevel push. The endpoint writes one
- * row to crm_form_submissions and stops. An earlier version of this comment
- * said the contact was pushed to HighLevel in the same request. That was true
- * of the planned endpoint and is not true of the one that shipped.
- *
- * The consequence is operational rather than technical: every WhatsApp opt-in
- * collected here lands in a table and reaches no broadcast list. Someone has
- * to move them, or the push has to be built.
- *
- * whatsapp_optin and marketing_optin still travel as their own booleans beside
- * fields rather than inside it, because consent should be a column and not a
- * form answer. The endpoint folds unowned top-level keys into fields, so they
- * are recorded either way.
- */
+// One endpoint for every form: AIOS site-form-capture. No HighLevel push:
+// the endpoint writes one row to crm_form_submissions and stops.
 export async function submitForm(
   form: FormKey,
   fields: Record<string, unknown>,
@@ -74,9 +53,6 @@ export async function submitForm(
       }),
     })
 
-    // The endpoint follows lp-lead's posture: a refusal returns 200 { ok: true }
-    // and stores nothing, so a bot learns nothing from the response and a human
-    // is not staring at an error on a form they already filled in.
     if (!res.ok) return { status: 'error', message: 'Something went wrong. Try again in a moment.' }
     return { status: 'ok' }
   } catch {

@@ -1,0 +1,35 @@
+main.ty-page{align-items:center}
+main.ty-page .ty-inner{position:relative;z-index:2;width:100%;padding:calc(env(safe-area-inset-top,0px) + 64px) 0 48px}
+main.ty-page .eyebrow{margin-bottom:22px}
+main.ty-page .ty-big{font-size:clamp(38px,6.4vw,76px);font-weight:900;color:var(--green);letter-spacing:-.03em;line-height:1.02;margin:0 auto 18px;max-width:none;text-wrap:balance;text-shadow:0 0 .24em rgba(139,230,67,.3),0 0 .6em rgba(139,230,67,.3)}
+main.ty-page .ty-sub{font-size:clamp(16px,1.35vw,19px);color:var(--cream);max-width:40ch;margin:0 auto 14px;text-wrap:balance}
+main.ty-page .facts{margin:0 auto 44px}
+main.ty-page .ty-steps-label{font-size:11px;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:var(--mute);max-width:none;margin:0 auto 16px}
+main.ty-page .ty-cards{display:grid;grid-template-columns:1fr 1fr;gap:14px;max-width:760px;margin:0 auto}
+main.ty-page .ty-card{background:rgba(0,0,0,.5);border:1px solid rgba(255,255,255,.12);border-radius:22px;padding:26px 24px;text-align:left;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+main.ty-page .ty-card h2{font-size:20px;font-weight:800;color:var(--cream);margin:0 0 8px;max-width:none}
+main.ty-page .ty-card p{font-size:14.5px;color:var(--body);margin:0 0 18px;max-width:none}
+main.ty-page .ty-actions{display:flex;flex-wrap:wrap;gap:8px}
+main.ty-page .ty-pill{border-radius:999px;padding:13px 20px;font-size:14px;text-align:center}
+main.ty-page .ty-pill.ghost{background:transparent;color:var(--cream);border:1px solid rgba(246,240,226,.45);padding:12px 19px}
+main.ty-page .ty-pill.ghost:hover{background:rgba(246,240,226,.12)}
+main.ty-page .sq-trust{margin-top:56px}
+@media(max-width:700px){
+  main.ty-page{align-items:flex-start}
+  main.ty-page .ty-inner{padding:calc(env(safe-area-inset-top,0px) + 44px) 0 32px}
+  main.ty-page .ty-cards{grid-template-columns:1fr}
+  main.ty-page .facts{margin-bottom:34px}
+  main.ty-page .ty-actions{flex-direction:column}
+  main.ty-page .ty-actions .ty-pill{width:100%;padding:14px 20px;font-size:15px}
+  main.ty-page .ty-actions .ty-pill.ghost{padding:13px 19px}
+  main.ty-page .sq-trust{margin-top:40px}
+}
+main.ty-page .ty-big{text-transform:uppercase;letter-spacing:-.02em}
+main.ty-page .ty-cards{max-width:900px}
+@media(min-width:701px){main.ty-page .ty-sub{max-width:54ch}}
+@media(min-width:1000px){
+  main.ty-page .ty-sub{max-width:none;text-wrap:nowrap}
+  main.ty-page .ty-actions{flex-wrap:nowrap}
+}
+main.ty-page .ty-big{text-shadow:0 0 .024em rgba(255,255,255,.3),0 0 .065em rgba(255,255,255,.3),0 0 .11em rgba(255,255,255,.3),0 0 .24em rgba(139,230,67,.3),0 0 .48em rgba(139,230,67,.3),0 0 .54em rgba(139,230,67,.3),0 0 .6em rgba(139,230,67,.3),0 0 .9em rgba(139,230,67,.3);animation:cookout-flicker 3s infinite alternate}
+@media(prefers-reduced-motion:reduce){main.ty-page .ty-big{animation:none}}

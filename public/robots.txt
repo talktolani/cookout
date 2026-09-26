@@ -5,3 +5,5 @@
 User-agent: *
 Disallow: /tables
 Disallow: /thanks
+
+Sitemap: https://thecookoutevent.com/sitemap.xml
