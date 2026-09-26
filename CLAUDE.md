@@ -1,5 +1,25 @@
 # The Cookout site: notes for whoever picks this up next
 
+## READ FIRST: this repo is NOT what thecookoutevent.com serves (27 Sep 2026)
+
+- **The live domain is pinned by alias to deployment dpl_4uR89q2hwLpGJqP44dQUBTC1xJZt**,
+  a direct file-upload deploy (no git metadata). thecookoutevent.com and www
+  point at it through `assign_alias`, so a push to main builds a "production"
+  deployment on cookout-site-lani-ai.vercel.app but does NOT move the domain.
+  Check with `list_aliases` (domain thecookoutevent.com) before assuming
+  anything about what is live.
+- **That live tree is newer than this repo.** It has app/tickets (page.tsx,
+  sales.css), components/BuyModal, CtaLink, FaqList, LiquidMetalButton,
+  NoiseLayer, ShareActions, StickyCta, TeamForm, ThanksName, TrustBar,
+  VideoCard, content/sales.ts and thanks.ts, lib/checkout.ts and
+  eventSchema.ts, app/opengraph-image.tsx, app/sitemap.ts and public/logos. And
+  the bare domain redirects to /tickets there, not /preregister.
+- **The Vercel MCP file tool cannot recover it.** get_deployment_file_contents
+  truncates every file at about 2KB. The full tree has to come from wherever it
+  was uploaded from.
+- **Do not assign the domain alias to a deployment built from this repo** until
+  the repo holds the live tree. It would drop /tickets and the Ticketmelon flow.
+
 ## REMOVE BEFORE FULL FUNNEL LAUNCH
 
 **The bare domain redirects to /preregister.** See `next.config.mjs`.
