@@ -3,6 +3,9 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { submitForm } from '@/lib/submit'
 import { TICKETS, REGISTER } from '@/content/event'
+import PhoneField from './PhoneField'
+import { BY_ISO } from '@/lib/countries'
+import type { PhoneValue } from '@/lib/phone'
 
 /**
  * Paid ticket purchase. Checkout is in-house, so this collects the order and
@@ -19,9 +22,12 @@ export default function TicketCheckout() {
   const [msg, setMsg] = useState<string | null>(null)
   const [wa, setWa] = useState(false)
   const [mk, setMk] = useState(false)
+  const [phone, setPhone] = useState<PhoneValue>({ e164: '', country: 'MY', valid: false })
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
+    if (!phone.e164) { setMsg('Add your WhatsApp number so we can send you your ticket.'); return }
+    if (!phone.valid) { setMsg(`That doesn't look like a full ${BY_ISO[phone.country]?.name ?? ''} number. Check the flag and the digits.`); return }
     if (!wa) { setMsg('Tick the WhatsApp box so we can send you your ticket and the address.'); return }
     setBusy(true); setMsg(null)
 
@@ -31,7 +37,8 @@ export default function TicketCheckout() {
       quantity: fd.get('quantity'),
       first_name: fd.get('first_name'),
       last_name: fd.get('last_name'),
-      whatsapp: fd.get('whatsapp'),
+      whatsapp: phone.e164,
+      whatsapp_country: phone.country,
       email: fd.get('email'),
       wants_tournament: fd.get('wants_tournament') === 'on',
     }, wa, mk)
@@ -48,8 +55,8 @@ export default function TicketCheckout() {
         <div className="field">
           <label htmlFor="tier">Ticket <span className="req">*</span></label>
           <select id="tier" name="tier" required defaultValue={TICKETS.earlyBird.name}>
-            <option>{`${TICKETS.earlyBird.name} — ${TICKETS.earlyBird.price}`}</option>
-            <option>{`${TICKETS.ga.name} — ${TICKETS.ga.price}`}</option>
+            <option>{`${TICKETS.earlyBird.name}: ${TICKETS.earlyBird.price}`}</option>
+            <option>{`${TICKETS.ga.name}: ${TICKETS.ga.price}`}</option>
           </select>
         </div>
         <div className="field">
@@ -74,7 +81,7 @@ export default function TicketCheckout() {
       <div className="field">
         <label htmlFor="t_wa">WhatsApp Number <span className="req">*</span></label>
         <p className="help">This is how we send your ticket, the address and the set times.</p>
-        <input id="t_wa" name="whatsapp" type="tel" placeholder="+60" autoComplete="tel" required />
+        <PhoneField id="t_wa" name="whatsapp" required onChange={setPhone} />
       </div>
 
       <div className="field">

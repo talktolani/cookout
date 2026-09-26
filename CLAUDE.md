@@ -166,3 +166,28 @@ cookout_email_sends, cookout_buyers, cookout-postmark-webhook.
   3 hours apart per channel (min_gap_minutes 180). A dated send that a person
   reaches more than 6 hours late is skipped (expires_at). The price line is a
   dated merge field on the workflow (RM 65 until 2 Oct 23:59 MYT, then RM 85).
+
+## WhatsApp number field with country flags (added 27 Sep 2026)
+
+- **components/PhoneField.tsx** is the phone input on the tickets form
+  (TicketCheckout). A flag button opens a searchable list of 243 countries,
+  pinned ones first (PINNED in lib/countries.ts). Search takes a name or a dial
+  code. Arrow keys, Enter and Escape work.
+- **Default flag is the visitor's country** from `app/geo/route.ts`, which just
+  returns Vercel's `x-vercel-ip-country`. No header (local dev) means Malaysia.
+  Once someone picks a flag or types, the geo answer is ignored.
+- **What gets posted:** `whatsapp` is E.164 (+60123456789) with the trunk 0
+  stripped, and `whatsapp_country` is the ISO code (MY). The AIOS WhatsApp
+  steps need E.164, so do not post the raw typed text.
+- **Typing or autofilling a +number moves the flag** (+44 7700 900123 becomes
+  GB). Shared codes keep the current flag if it matches, else the main country
+  (+1 is US).
+- **Country data is generated**, not hand typed: libphonenumber metadata via
+  python phonenumbers 9.0.40 gives dial code, trunk prefix and valid national
+  lengths, which is what the "doesn't look like a full number" check uses.
+  Regenerate rather than edit rows by hand.
+- **Flags are self-hosted** in public/flags/<iso>.png (48x36, about 100KB for
+  all 243), rasterised from flag-icons (MIT). No third-party CDN. The list
+  lazy-loads them.
+- RegisterForm, TableForm and the /preregister squeeze page still use a plain
+  tel input. Swap in PhoneField the same way if they need flags too.
