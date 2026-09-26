@@ -179,6 +179,16 @@ main.sl-page .sl-stack-cta .sl-cta-sub{margin-left:0}
 .bm-card input:focus{outline:none;border-color:rgba(246,240,226,.55)}
 .bm-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .bm-row input{min-width:0}
+/* WhatsApp field with the country flag (components/PhoneField.tsx), shaped to
+   match the pill inputs. The country list opens inline so it scrolls with the
+   card instead of being clipped by it. */
+.bm-card .phone-row{border-radius:999px;background:rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.2)}
+.bm-card .phone-row:focus-within{outline:none;border-color:rgba(246,240,226,.55)}
+.bm-card .phone-row input[type=tel]{border:0;border-radius:0;background:transparent;padding:14px 18px 14px 12px}
+.bm-card .phone-cc{padding:0 12px 0 18px;border-radius:999px 0 0 999px;border-right-color:rgba(255,255,255,.2)}
+.bm-card .phone-pop{position:static;margin-top:8px;border-radius:14px}
+.bm-card input.phone-search{border:0;border-bottom:1px solid rgba(255,255,255,.12);border-radius:0;background:rgba(0,0,0,.25);padding:12px 16px}
+.bm-card .phone-pop ul{max-height:220px}
 .bm-card .check{margin:6px 0 0}
 .bm-card .check label{font-size:13.5px;color:var(--mute)}
 .bm-card .formmsg{margin:4px 0 0}

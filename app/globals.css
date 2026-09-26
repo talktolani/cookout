@@ -89,6 +89,39 @@ textarea{min-height:80px;resize:vertical}
 .req{color:var(--green);font-weight:700}
 .optin{border-left:3px solid var(--green);padding:16px 0 4px 16px;background:rgba(139,230,67,.05);margin:26px 0 20px}
 .formmsg{margin-top:14px;font-size:14px;color:var(--ember-lt);font-weight:600}
+
+/* phone field with country flag picker (components/PhoneField.tsx) */
+.phone{position:relative}
+.phone-row{display:flex;align-items:stretch;background:rgba(0,0,0,.32);
+  border:1px solid rgba(255,255,255,.16);border-radius:2px}
+.phone-row:focus-within{outline:2px solid var(--green);border-color:transparent}
+.phone-row input{border:0;background:transparent;min-width:0;flex:1}
+.phone-row input:focus{outline:none}
+.phone-cc{display:flex;align-items:center;gap:8px;padding:0 12px 0 14px;flex:0 0 auto;
+  background:transparent;border:0;border-right:1px solid rgba(255,255,255,.16);
+  color:var(--cream);font:600 16px var(--font);cursor:pointer}
+.phone-cc:hover{background:rgba(255,255,255,.05)}
+.phone-cc:focus-visible{outline:2px solid var(--green);outline-offset:-2px}
+.phone-cc img,.phone-opt img{width:24px;height:18px;border-radius:2px;flex:0 0 auto;
+  box-shadow:0 0 0 1px rgba(255,255,255,.14)}
+.phone-cc svg{color:var(--mute);transition:transform .15s}
+.phone-cc[aria-expanded=true] svg{transform:rotate(180deg)}
+.phone-pop{position:absolute;left:0;right:0;top:calc(100% + 6px);z-index:40;
+  background:#111833;border:1px solid rgba(139,230,67,.35);border-radius:2px;
+  box-shadow:0 18px 40px rgba(0,0,0,.5);overflow:hidden}
+.phone-search{border:0;border-bottom:1px solid rgba(255,255,255,.12);border-radius:0;
+  background:rgba(0,0,0,.25);padding:12px 14px}
+.phone-search:focus{outline:none;background:rgba(0,0,0,.4)}
+.phone-pop ul{list-style:none;margin:0;padding:6px 0;max-height:280px;overflow-y:auto;
+  overscroll-behavior:contain}
+.phone-opt{display:flex;align-items:center;gap:12px;padding:10px 14px;cursor:pointer;
+  font-size:15px;color:var(--body)}
+.phone-opt.on{background:rgba(139,230,67,.12);color:var(--cream)}
+.phone-opt[aria-selected=true] .phone-name{color:var(--green);font-weight:700}
+.phone-name{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.phone-dial{color:var(--mute);font-variant-numeric:tabular-nums}
+.phone-sep{height:1px;background:rgba(255,255,255,.12);margin:6px 0}
+.phone-none{padding:14px;color:var(--mute);font-size:14px}
 details{border-top:1px solid rgba(255,255,255,.12);padding:18px 0}
 details:last-of-type{border-bottom:1px solid rgba(255,255,255,.12)}
 summary{cursor:pointer;font-size:17px;font-weight:700;color:var(--cream);list-style:none;display:flex;justify-content:space-between;gap:20px}
