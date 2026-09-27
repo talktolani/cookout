@@ -1,31 +1,42 @@
 # The Cookout site: notes for whoever picks this up next
 
-## READ FIRST: this repo is NOT what thecookoutevent.com serves (27 Sep 2026)
+## What thecookoutevent.com serves (updated 27 Sep 2026)
 
-- **The live domain is pinned by alias to deployment dpl_4uR89q2hwLpGJqP44dQUBTC1xJZt**,
-  a direct file-upload deploy (no git metadata). thecookoutevent.com and www
-  point at it through `assign_alias`, so a push to main builds a "production"
-  deployment on cookout-site-lani-ai.vercel.app but does NOT move the domain.
-  Check with `list_aliases` (domain thecookoutevent.com) before assuming
-  anything about what is live.
-- **That live tree is newer than this repo.** It has app/tickets (page.tsx,
-  sales.css), components/BuyModal, CtaLink, FaqList, LiquidMetalButton,
-  NoiseLayer, ShareActions, StickyCta, TeamForm, ThanksName, TrustBar,
-  VideoCard, content/sales.ts and thanks.ts, lib/checkout.ts and
-  eventSchema.ts, app/opengraph-image.tsx, app/sitemap.ts and public/logos. And
-  the bare domain redirects to /tickets there, not /preregister.
-- **The Vercel MCP file tool cannot recover it.** get_deployment_file_contents
-  truncates every file at about 2KB. The full tree has to come from wherever it
-  was uploaded from.
-- **Do not assign the domain alias to a deployment built from this repo** until
-  the repo holds the live tree. It would drop /tickets and the Ticketmelon flow.
+- **The domain serves main again.** On 27 Sep, thecookoutevent.com (and www,
+  a 307 to the apex) moved to dpl_16hC2YUeCTnW2cG5LwPsbw6Goo3X, the git build
+  of cb11504. Before that it was pinned to a file-upload deploy
+  (dpl_4uR89q2hwLpGJqP44dQUBTC1xJZt) whose tree was newer than this repo, and
+  pushes to main never reached it.
+- **Always check before assuming what is live:** `list_aliases` with domain
+  thecookoutevent.com, slug lani-ai. If the alias points at a deployment with
+  no git metadata again, someone deployed from a local folder: get that tree
+  into main before anything else ships from here.
+- **Moving the domain:** `assign_alias` answers 403 through the Vercel
+  connector. `request_promote` (projectId prj_hYD5JGx5z1XRbp0h7UKj4S0isUH8, the
+  deployment id) works and moves thecookoutevent.com and www together.
+- **Never deploy from a local folder again.** That is how the source got lost:
+  the tree only existed on Donny's old laptop. Commit, push, let Vercel build.
+- **Branch live-snapshot-2026-09-25** is the untouched 54-file tree the domain
+  served until 27 Sep, recovered from Vercel's file store with every file's
+  SHA-1 matching the uid Vercel lists. Keep it as the reference.
+
+### How the lost source was recovered (if it ever happens again)
+`get_deployment_file_contents` truncates at about 2KB, so reading files one by
+one fails. What worked: `list_deployment_files` gives every path and SHA-1;
+`create_deployment` (preview, no target) can reference those SHAs without
+re-uploading, plus one inline script run as the build command that posted the
+checked-out files to a one-time endpoint. Then check each file's SHA-1 against
+the list. The build rewrites vercel.json, so take that one (it's tiny) from
+`get_deployment_file_contents` instead. Don't let the throwaway deploy's
+`projectSettings` stick: check `get_project` afterwards.
 
 ## REMOVE BEFORE FULL FUNNEL LAUNCH
 
-**The bare domain redirects to /preregister.** See `next.config.mjs`.
+**The bare domain redirects to /tickets** (since 25 Sep; before that
+/preregister). See `next.config.mjs`.
 
-While only the squeeze page is ready, `thecookoutevent.com` and
-`www.thecookoutevent.com` send `/` to `/preregister` with a 307. The full
+On `thecookoutevent.com` and `www.thecookoutevent.com` only, `/` goes to
+`/tickets` with a 307. The vercel.app URLs still serve the full funnel at `/`. The full
 funnel at `/` still has bracketed placeholders on it: the venue address, all 3
 table packages, costume and tournament prize values, the family-friendly cut
 off, and the wet weather answer.
@@ -189,8 +200,11 @@ cookout_email_sends, cookout_buyers, cookout-postmark-webhook.
 
 ## WhatsApp number field with country flags (added 27 Sep 2026)
 
-- **components/PhoneField.tsx** is the phone input on the tickets form
-  (TicketCheckout). A flag button opens a searchable list of 243 countries,
+- **components/PhoneField.tsx** is the WhatsApp field in the /tickets buy
+  pop-up (components/BuyModal.tsx, form ticket-order), full width under Email
+  and styled to the pill inputs in app/tickets/sales.css (.bm-card .phone-*),
+  with its country list opening inline so the card scrolls rather than
+  clipping it. It is also on TicketCheckout (the full funnel at /). A flag button opens a searchable list of 243 countries,
   pinned ones first (PINNED in lib/countries.ts). Search takes a name or a dial
   code. Arrow keys, Enter and Escape work.
 - **Default flag is the visitor's country** from `app/geo/route.ts`, which just
@@ -209,5 +223,7 @@ cookout_email_sends, cookout_buyers, cookout-postmark-webhook.
 - **Flags are self-hosted** in public/flags/<iso>.png (48x36, about 100KB for
   all 243), rasterised from flag-icons (MIT). No third-party CDN. The list
   lazy-loads them.
-- RegisterForm, TableForm and the /preregister squeeze page still use a plain
-  tel input. Swap in PhoneField the same way if they need flags too.
+- TeamForm (the tournament form on /tickets), RegisterForm, TableForm and the
+  /preregister squeeze page still use a plain tel input. Swap in PhoneField
+  the same way if they need flags too; pass `placeholder` when the field has
+  no visible label.
