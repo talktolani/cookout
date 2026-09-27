@@ -11,6 +11,10 @@
   thecookoutevent.com, slug lani-ai. If the alias points at a deployment with
   no git metadata again, someone deployed from a local folder: get that tree
   into main before anything else ships from here.
+- **A push to main now moves the domain by itself.** Checked 27 Sep: 0c8ff63
+  built as dpl_7c99t8scnEvK4DZNAthmMZpCVw5R (source git, target production)
+  and took thecookoutevent.com and www within 30 seconds, no promote needed.
+  So treat every push to main as a live deploy.
 - **Moving the domain:** `assign_alias` answers 403 through the Vercel
   connector. `request_promote` (projectId prj_hYD5JGx5z1XRbp0h7UKj4S0isUH8, the
   deployment id) works and moves thecookoutevent.com and www together.
