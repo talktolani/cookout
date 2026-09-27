@@ -79,7 +79,7 @@ export const EVENT = {
 
 export const HERO = {
   eyebrow: 'KUALA LUMPUR',
-  headline: 'Barbecue, games, pickleball, and a sound system.',
+  headline: 'Barbecue, games, pickleball, 90s R&B, Afrobeats, and Amapiano.',
   facts: `${EVENT.date} · ${EVENT.timeRange} · ${EVENT.venue}, ${EVENT.city}`,
   support: `Early Bird is ${TICKETS.earlyBird.price} through ${TICKETS.earlyBird.closes}. ${TICKETS.ga.price} after that, and your first drink is on us.`,
   primaryCta: 'Get Your Ticket',

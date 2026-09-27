@@ -14,12 +14,12 @@ const montserrat = Montserrat({
 
 export const metadata: Metadata = {
   formatDetection: { telephone: false, address: false, date: false },
-  title: 'The Cookout: Barbecue, Games, And A Sound System',
-  description: `${EVENT.dateShort}, ${EVENT.timeShort} at ${EVENT.venue}, ${EVENT.city}. Barbecue, games, pickleball and a sound system. Pre-register free for the cheapest tickets.`,
+  title: 'The Cookout: Barbecue, Games, 90s R&B, Afrobeats And Amapiano',
+  description: `${EVENT.dateShort}, ${EVENT.timeShort} at ${EVENT.venue}, ${EVENT.city}. Barbecue, games, pickleball, 90s R&B, Afrobeats and Amapiano. Pre-register free for the cheapest tickets.`,
   metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL ?? 'https://example.invalid'),
   openGraph: {
     title: 'The Cookout',
-    description: `${EVENT.dateShort} | ${EVENT.timeShort} at ${EVENT.venue}, ${EVENT.city}. Barbecue, games, pickleball and a sound system.`,
+    description: `${EVENT.dateShort} | ${EVENT.timeShort} at ${EVENT.venue}, ${EVENT.city}. Barbecue, games, pickleball, 90s R&B, Afrobeats and Amapiano.`,
     type: 'website',
     // The share image is drawn by app/opengraph-image.tsx at build time.
   },

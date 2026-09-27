@@ -5,10 +5,11 @@ import ViewportFit from '@/components/ViewportFit'
 import TrustBar from '@/components/TrustBar'
 import { EVENT, HERO, TICKETS, MEDIA } from '@/content/event'
 import './mobile.css'
+import { keep90s } from '@/lib/keep90s'
 
 export const metadata = {
   title: 'The Cookout | Pre-register for Early Bird',
-  description: `Barbecue, games and a sound system at ${EVENT.venue}, ${EVENT.city}. ${EVENT.date}. Pre-register for first access to Early Bird at ${TICKETS.earlyBird.price}.`,
+  description: `Barbecue, games, 90s R&B, Afrobeats and Amapiano at ${EVENT.venue}, ${EVENT.city}. ${EVENT.date}. Pre-register for first access to Early Bird at ${TICKETS.earlyBird.price}.`,
 }
 
 export default function Preregister() {
@@ -33,7 +34,7 @@ export default function Preregister() {
             <span className="out">COOKOUT!</span>
           </div>
 
-          <h1 className="sq-head">{HERO.headline}</h1>
+          <h1 className="sq-head">{keep90s(HERO.headline)}</h1>
 
           <p className="facts">{EVENT.dateShort} | {EVENT.timeShort}</p>
 

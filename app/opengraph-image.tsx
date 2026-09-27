@@ -10,7 +10,7 @@ import { EVENT, HERO, TICKETS } from '@/content/event'
 // hero poster from Higgsfield storage, so it always matches the live hero.
 // Next adds the og:image tags for every page automatically.
 export const runtime = 'nodejs'
-export const alt = 'The Cookout: barbecue, games, pickleball and a sound system'
+export const alt = 'The Cookout: barbecue, games, pickleball, 90s R&B, Afrobeats and Amapiano'
 export const size = { width: 1200, height: 630 }
 // JPEG, not PNG: the PNG came out near 700KB and WhatsApp drops preview
 // images over roughly 300KB.
@@ -50,7 +50,7 @@ export default async function Image() {
           <div style={{ fontSize: 176, fontWeight: 900, lineHeight: 1, letterSpacing: -6, color: LIME, marginTop: -4, marginBottom: 26, textShadow: '0 0 24px rgba(139,230,67,.45), 0 0 70px rgba(139,230,67,.3)' }}>
             COOKOUT!
           </div>
-          <div style={{ fontSize: 33, fontWeight: 800, marginBottom: 16 }}>{HERO.headline.toUpperCase()}</div>
+          <div style={{ fontSize: 33, fontWeight: 800, marginBottom: 16 }}>{HERO.headline.toUpperCase().replace('90S', '90s')}</div>
           <div style={{ fontSize: 21, fontWeight: 600, letterSpacing: 2.5, marginBottom: 18 }}>
             {`${EVENT.dateShort} | ${EVENT.timeShort}`.toUpperCase()}
           </div>

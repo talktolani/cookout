@@ -33,7 +33,7 @@ export const THANKS_PAGE = {
     copy: 'Copy Link',
     copied: 'Link Copied',
     link: `${SITE}/preregister?utm_source=whatsapp&utm_medium=share`,
-    message: `I'm going to The Cookout, ${EVENT.dateShort} at ${EVENT.venue}. Barbecue, games, pickleball and a sound system. Pre-register free for the cheapest tickets:`,
+    message: `I'm going to The Cookout, ${EVENT.dateShort} at ${EVENT.venue}. Barbecue, games, pickleball, 90s R&B, Afrobeats and Amapiano. Pre-register free for the cheapest tickets:`,
   },
 }
 
@@ -42,6 +42,6 @@ export const CALENDAR = {
     'The Cookout'
   )}&dates=${EVENT.calendar.start}/${EVENT.calendar.end}&ctz=Asia/Kuala_Lumpur&location=${encodeURIComponent(
     `${EVENT.venue}, ${EVENT.city}`
-  )}&details=${encodeURIComponent('Barbecue, games, pickleball and a sound system. ' + SITE)}`,
+  )}&details=${encodeURIComponent('Barbecue, games, pickleball, 90s R&B, Afrobeats and Amapiano. ' + SITE)}`,
   ics: '/the-cookout.ics',
 }

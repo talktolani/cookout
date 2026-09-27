@@ -13,10 +13,11 @@ import { SALES } from '@/content/sales'
 import { EVENT_SCHEMA } from '@/lib/eventSchema'
 import '../preregister/mobile.css'
 import './sales.css'
+import { keep90s } from '@/lib/keep90s'
 
 export const metadata = {
   title: 'The Cookout | Tickets',
-  description: `${EVENT.dateShort}, ${EVENT.timeShort} at ${EVENT.venue}, ${EVENT.city}. Barbecue, games, pickleball and a sound system. Early Bird ${TICKETS.earlyBird.price}, first drink included.`,
+  description: `${EVENT.dateShort}, ${EVENT.timeShort} at ${EVENT.venue}, ${EVENT.city}. Barbecue, games, pickleball, 90s R&B, Afrobeats and Amapiano. Early Bird ${TICKETS.earlyBird.price}, first drink included.`,
   // Indexable since 25 Sep: this is the page the Event markup lives on.
   alternates: { canonical: '/tickets' },
 }
@@ -32,7 +33,7 @@ export default function Tickets() {
         <div className="sl-hero-inner wrap">
           <div className="eyebrow">{EVENT.venue.toUpperCase()} · {EVENT.city.toUpperCase()}</div>
           <div className="mark"><span className="the">THE</span><span className="out">COOKOUT!</span></div>
-          <h1 className="sl-head">{SALES.hero.headline}</h1>
+          <h1 className="sl-head">{keep90s(SALES.hero.headline)}</h1>
           <p className="sl-facts">{EVENT.dateShort} | {EVENT.timeShort}</p>
           <p className="sl-offer">{SALES.hero.offer}</p>
           <div className="sl-ctas">

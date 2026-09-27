@@ -5,6 +5,7 @@ import Faq from '@/components/Faq'
 import RegisterForm from '@/components/RegisterForm'
 import Ph from '@/components/Ph'
 import TicketCheckout from '@/components/TicketCheckout'
+import { keep90s } from '@/lib/keep90s'
 import {
   EVENT, HERO, THREE, VENUE_SECTION, TOURNAMENT,
   INCLUDED, GETTING_THERE, REGISTER, TICKETS,
@@ -29,7 +30,7 @@ export default function Home() {
                 <span className="the">THE</span>
                 <span className="out">COOKOUT!</span>
               </div>
-              <h1 className="headline">{HERO.headline}</h1>
+              <h1 className="headline">{keep90s(HERO.headline)}</h1>
               <p className="facts">{HERO.facts}</p>
               <p className="support">{HERO.support}</p>
               <div className="ctarow">

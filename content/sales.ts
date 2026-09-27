@@ -31,7 +31,7 @@ export const SALES = {
   },
 
   hero: {
-    headline: 'Barbecue, games, pickleball, and a sound system',
+    headline: 'Barbecue, games, pickleball, 90s R&B, Afrobeats, and Amapiano',
     offer: `Early Bird is ${PRICE} and your first drink's on us. The price goes up after ${TICKETS.earlyBird.closes}.`,
     cta: 'Buy Tickets',
   },
