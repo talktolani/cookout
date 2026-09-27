@@ -7,7 +7,7 @@ import { EVENT, HERO, TICKETS, MEDIA } from '@/content/event'
 import './mobile.css'
 
 export const metadata = {
-  title: 'The Cookout — Pre-register for Early Bird',
+  title: 'The Cookout | Pre-register for Early Bird',
   description: `Barbecue, games and a sound system at ${EVENT.venue}, ${EVENT.city}. ${EVENT.date}. Pre-register for first access to Early Bird at ${TICKETS.earlyBird.price}.`,
 }
 

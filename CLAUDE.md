@@ -223,7 +223,21 @@ cookout_email_sends, cookout_buyers, cookout-postmark-webhook.
 - **Flags are self-hosted** in public/flags/<iso>.png (48x36, about 100KB for
   all 243), rasterised from flag-icons (MIT). No third-party CDN. The list
   lazy-loads them.
-- TeamForm (the tournament form on /tickets), RegisterForm, TableForm and the
-  /preregister squeeze page still use a plain tel input. Swap in PhoneField
-  the same way if they need flags too; pass `placeholder` when the field has
-  no visible label.
+- **Every form that asks for WhatsApp uses it** (27 Sep 2026): the buy
+  pop-up, TicketCheckout and RegisterForm on /, TableForm on /tables,
+  TeamForm (Register Your Team on /tickets) and the /preregister squeeze
+  page. Each one validates with `phone.valid` and posts `whatsapp` plus
+  `whatsapp_country`. Pass `placeholder` when the field has no visible label.
+  Any new form must do the same, never a plain tel input.
+- **Step-by-step forms** (/preregister) unmount the field when someone goes
+  Back. Keep the last PhoneValue in the parent and pass it as `initial`, which
+  restores the flag and digits and stops the geo answer moving the flag.
+- **Styling per page:** the base `.phone*` block in app/globals.css suits the
+  square formcard fields. Pill versions: `.sq-form .phone*` (globals.css,
+  /preregister), `main.sl-page .sl-team .phone*` and `.bm-card .phone*`
+  (app/tickets/sales.css). Those pages have high-specificity input rules, so
+  the overrides go through `.phone .phone-row input[type=tel]` and
+  `input.phone-search`. On /preregister phones the WhatsApp step stacks the
+  button under the field (`.sq-row-phone` in app/preregister/mobile.css),
+  because side by side left about 60px for the digits.
+- **Page titles:** no em dashes in `metadata.title` either; use a pipe.

@@ -13,6 +13,10 @@ main.squeeze .sq-btn{width:auto;flex:0 0 auto}
   main.squeeze .sq-form input[type=text],main.squeeze .sq-form input[type=tel],main.squeeze .sq-form input[type=email]{padding:15px 18px}
   main.squeeze .sq-btn{padding:0 22px;font-size:15px}
   main.squeeze .sq-benefits{margin-top:16px}
+  /* WhatsApp step: flag, code and number need the full width on a phone, so the button goes underneath */
+  main.squeeze .sq-row.sq-row-phone{flex-direction:column;gap:10px}
+  main.squeeze .sq-row-phone .phone{position:relative}
+  main.squeeze .sq-row-phone .sq-btn{width:100%;padding:16px 22px}
   html.kb-open main.squeeze .sq-inner{min-height:0;padding:16px 0 0}
   html.kb-open main.squeeze .sq-inner .wrap{justify-content:flex-start;gap:0}
 }

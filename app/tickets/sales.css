@@ -143,6 +143,14 @@ main.sl-page .lm-ripple{position:absolute;z-index:3;width:20px;height:20px;borde
 main.sl-page .lm-sm{height:44px;padding:0 22px}
 main.sl-page .lm-sm .lm-label{font-size:14.5px}
 main.sl-page .sl-team-submit{margin-top:18px}
+/* WhatsApp field with the country flag, as a pill to match the other inputs */
+main.sl-page .sl-team .phone .phone-row{border-radius:999px;background:rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.2)}
+main.sl-page .sl-team .phone .phone-row:focus-within{outline:none;border-color:rgba(246,240,226,.55)}
+main.sl-page .sl-team .phone .phone-row input[type=tel]{border:0;border-radius:0;background:transparent;padding:14px 18px 14px 12px}
+main.sl-page .sl-team .phone .phone-cc{padding:0 10px 0 16px;border-radius:999px 0 0 999px;border-right-color:rgba(255,255,255,.2);font-size:15.5px}
+main.sl-page .sl-team .phone .phone-pop{border-radius:14px}
+main.sl-page .sl-team .phone input.phone-search{border:0;border-bottom:1px solid rgba(255,255,255,.12);border-radius:0;background:rgba(0,0,0,.25);padding:12px 16px}
+main.sl-page .sl-team .phone .phone-pop ul{max-height:220px}
 main.sl-page .sl-cta-sub{font-size:13.5px;color:var(--mute);margin:12px auto 0;max-width:none;line-height:1.45}
 main.sl-page .sl-hero .sl-ctas{margin-bottom:16px}
 main.sl-page .sl-hero-inner{padding-bottom:118px}

@@ -5,7 +5,7 @@ import TableForm from '@/components/TableForm'
 import Ph from '@/components/Ph'
 import { EVENT, TABLES } from '@/content/event'
 
-export const metadata = { title: 'Tables and VIP — The Cookout' }
+export const metadata = { title: 'Tables and VIP | The Cookout' }
 
 export default function Tables() {
   return (

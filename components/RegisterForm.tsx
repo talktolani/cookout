@@ -3,6 +3,9 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { submitForm } from '@/lib/submit'
 import { REGISTER } from '@/content/event'
+import PhoneField from '@/components/PhoneField'
+import { BY_ISO } from '@/lib/countries'
+import type { PhoneValue } from '@/lib/phone'
 
 export default function RegisterForm() {
   const router = useRouter()
@@ -10,9 +13,17 @@ export default function RegisterForm() {
   const [msg, setMsg] = useState<string | null>(null)
   const [wa, setWa] = useState(false)
   const [mk, setMk] = useState(false)
+  const [phone, setPhone] = useState<PhoneValue>({ e164: '', country: 'MY', valid: false })
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
+    const fd = new FormData(e.currentTarget)
+    if (!String(fd.get('first_name') ?? '').trim()) { setMsg('Enter your first name.'); return }
+    if (!phone.e164) { setMsg('Add your WhatsApp number.'); return }
+    if (!phone.valid) {
+      setMsg(`That doesn't look like a full ${BY_ISO[phone.country]?.name ?? ''} number. Check the flag and the digits.`)
+      return
+    }
     if (!wa) {
       setMsg('Tick the WhatsApp box so we can send you the address and set times.')
       return
@@ -20,13 +31,13 @@ export default function RegisterForm() {
     setBusy(true)
     setMsg(null)
 
-    const fd = new FormData(e.currentTarget)
     const res = await submitForm(
       'guest-list',
       {
         first_name: fd.get('first_name'),
         last_name: fd.get('last_name'),
-        whatsapp: fd.get('whatsapp'),
+        whatsapp: phone.e164,
+        whatsapp_country: phone.country,
         email: fd.get('email'),
         guests: fd.get('guests'),
         heard_from: fd.get('heard_from'),
@@ -59,7 +70,7 @@ export default function RegisterForm() {
       <div className="field">
         <label htmlFor="whatsapp">WhatsApp Number <span className="req">*</span></label>
         <p className="help">This is how we send you the address and set times.</p>
-        <input id="whatsapp" name="whatsapp" type="tel" placeholder="+60" autoComplete="tel" required />
+        <PhoneField id="whatsapp" name="whatsapp" required onChange={setPhone} />
       </div>
 
       <div className="field">

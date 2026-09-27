@@ -3,6 +3,9 @@ import { useEffect, useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { submitForm } from '@/lib/submit'
 import { TICKETS } from '@/content/event'
+import PhoneField from '@/components/PhoneField'
+import { BY_ISO } from '@/lib/countries'
+import type { PhoneValue } from '@/lib/phone'
 
 const STEPS = [
   { key: 'first_name', label: 'First name', type: 'text', autoComplete: 'given-name', placeholder: 'First name' },
@@ -16,6 +19,8 @@ export default function PreregisterForm() {
   const router = useRouter()
   const [step, setStep] = useState(0)
   const [values, setValues] = useState<Record<Key, string>>({ first_name: '', email: '', whatsapp: '' })
+  // The WhatsApp step uses the flag picker; null until it has been on screen once.
+  const [phone, setPhone] = useState<PhoneValue | null>(null)
   const [busy, setBusy] = useState(false)
   const [done, setDone] = useState(false)
   const [msg, setMsg] = useState<string | null>(null)
@@ -26,13 +31,20 @@ export default function PreregisterForm() {
   const last = step === STEPS.length - 1
   const current = STEPS[step]
 
-  useEffect(() => { inputRef.current?.focus() }, [step])
+  useEffect(() => {
+    // The phone step renders PhoneField, whose number box also has id sq_field.
+    ;(inputRef.current ?? document.getElementById('sq_field'))?.focus()
+  }, [step])
 
   function validate(): string | null {
+    if (current.key === 'whatsapp') {
+      if (!phone?.e164) return 'Enter your WhatsApp number.'
+      if (!phone.valid) return `That doesn't look like a full ${BY_ISO[phone.country]?.name ?? ''} number. Check the flag and the digits.`
+      return null
+    }
     const v = values[current.key].trim()
     if (!v) return `Enter your ${current.label.toLowerCase()}.`
-    if (current.key === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) return 'That email does not look right.'
-    if (current.key === 'whatsapp' && v.replace(/\D/g, '').length < 8) return 'That number looks too short.'
+    if (current.key === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) return "That email doesn't look right."
     return null
   }
 
@@ -47,7 +59,12 @@ export default function PreregisterForm() {
     if (!wa) { setMsg('Tick the box so we can send you the Early Bird link.'); return }
 
     setBusy(true)
-    const res = await submitForm('preregister', { ...values, _hp: hp }, wa, false)
+    const res = await submitForm(
+      'preregister',
+      { ...values, whatsapp: phone?.e164 ?? '', whatsapp_country: phone?.country ?? '', _hp: hp },
+      wa,
+      false
+    )
     setBusy(false)
 
     if (res.status === 'ok') {
@@ -103,19 +120,28 @@ export default function PreregisterForm() {
         </div>
       )}
 
-      <div className="sq-row">
-        <input
-          ref={inputRef}
-          id="sq_field"
-          key={current.key}
-          type={current.type}
-          inputMode={current.key === 'whatsapp' ? 'tel' : undefined}
-          autoComplete={current.autoComplete}
-          placeholder={current.placeholder}
-          value={values[current.key]}
-          onChange={(e) => setValues({ ...values, [current.key]: e.target.value })}
-          aria-label={current.label}
-        />
+      <div className={`sq-row${current.key === 'whatsapp' ? ' sq-row-phone' : ''}`}>
+        {current.key === 'whatsapp' ? (
+          <PhoneField
+            id="sq_field"
+            name="whatsapp"
+            placeholder={current.placeholder}
+            initial={phone}
+            onChange={setPhone}
+          />
+        ) : (
+          <input
+            ref={inputRef}
+            id="sq_field"
+            key={current.key}
+            type={current.type}
+            autoComplete={current.autoComplete}
+            placeholder={current.placeholder}
+            value={values[current.key]}
+            onChange={(e) => setValues({ ...values, [current.key]: e.target.value })}
+            aria-label={current.label}
+          />
+        )}
         <button className="btn sq-btn" type="submit" disabled={busy} data-track={last ? 'preregister-submit' : `preregister-next-${step + 1}`}>
           {busy ? 'One moment' : last ? 'Get First Access' : 'Next'}
         </button>

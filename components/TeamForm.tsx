@@ -3,6 +3,9 @@ import { useState } from 'react'
 import { submitForm } from '@/lib/submit'
 import { SALES } from '@/content/sales'
 import LiquidMetalButton from '@/components/LiquidMetalButton'
+import PhoneField from '@/components/PhoneField'
+import { BY_ISO } from '@/lib/countries'
+import type { PhoneValue } from '@/lib/phone'
 
 // Register Your Team: opens a short form under the tournament copy and saves
 // to the tournament-entry form in AIOS (crm_forms row checked active 25 Sep).
@@ -14,6 +17,7 @@ export default function TeamForm() {
   const [msg, setMsg] = useState<string | null>(null)
   const [wa, setWa] = useState(false)
   const [solo, setSolo] = useState(false)
+  const [phone, setPhone] = useState<PhoneValue>({ e164: '', country: 'MY', valid: false })
 
   if (done) {
     return (
@@ -36,16 +40,20 @@ export default function TeamForm() {
     e.preventDefault()
     const fd = new FormData(e.currentTarget)
     const name = String(fd.get('first_name') ?? '').trim()
-    const phone = String(fd.get('whatsapp') ?? '').trim()
     const partner = String(fd.get('partner_name') ?? '').trim()
     if (!name) { setMsg('Enter your first name.'); return }
-    if (phone.replace(/\D/g, '').length < 8) { setMsg('That WhatsApp number looks too short.'); return }
+    if (!phone.e164) { setMsg('Add your WhatsApp number.'); return }
+    if (!phone.valid) {
+      setMsg(`That doesn't look like a full ${BY_ISO[phone.country]?.name ?? ''} number. Check the flag and the digits.`)
+      return
+    }
     if (!solo && !partner) { setMsg("Add your partner's name, or tick that you need one."); return }
     if (!wa) { setMsg('Tick the box so we can confirm your pair on WhatsApp.'); return }
     setMsg(null); setBusy(true)
     const res = await submitForm('tournament-entry', {
       first_name: name,
-      whatsapp: phone,
+      whatsapp: phone.e164,
+      whatsapp_country: phone.country,
       partner_name: solo ? '' : partner,
       needs_partner: solo,
       sport: fd.get('sport'),
@@ -64,7 +72,7 @@ export default function TeamForm() {
         <label className="sr-only" htmlFor="tm_name">Your first name</label>
         <input id="tm_name" name="first_name" type="text" autoComplete="given-name" placeholder="Your first name" />
         <label className="sr-only" htmlFor="tm_wa">WhatsApp number</label>
-        <input id="tm_wa" name="whatsapp" type="tel" inputMode="tel" autoComplete="tel" placeholder="WhatsApp number" />
+        <PhoneField id="tm_wa" name="whatsapp" placeholder="WhatsApp number" onChange={setPhone} />
       </div>
       <div className="sl-team-row">
         <label className="sr-only" htmlFor="tm_partner">Partner's first name</label>

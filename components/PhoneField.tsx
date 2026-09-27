@@ -19,6 +19,7 @@ export default function PhoneField({
   name,
   required,
   placeholder,
+  initial,
   onChange,
 }: {
   id: string
@@ -26,14 +27,25 @@ export default function PhoneField({
   required?: boolean
   /** Shown instead of the national example when the field has no visible label. */
   placeholder?: string
+  /**
+   * What the field held last time it was on screen. Step-by-step forms unmount
+   * the field when someone goes Back, so this puts the flag and digits back.
+   */
+  initial?: PhoneValue | null
   onChange?: (v: PhoneValue) => void
 }) {
-  const [country, setCountry] = useState<Country>(() => countryOr(DEFAULT_COUNTRY, DEFAULT_COUNTRY))
-  const [raw, setRaw] = useState('')
+  const [country, setCountry] = useState<Country>(() => countryOr(initial?.country ?? DEFAULT_COUNTRY, DEFAULT_COUNTRY))
+  const [raw, setRaw] = useState(() => {
+    if (!initial?.e164) return ''
+    const c = countryOr(initial.country, DEFAULT_COUNTRY)
+    const cc = `+${c.dial}`
+    return initial.e164.startsWith(cc) ? initial.e164.slice(cc.length) : initial.e164
+  })
   const [open, setOpen] = useState(false)
   const [q, setQ] = useState('')
   const [active, setActive] = useState(0)
-  const touched = useRef(false)
+  // A restored field already has its flag, so the visitor's location must not move it.
+  const touched = useRef(Boolean(initial))
   const wrap = useRef<HTMLDivElement>(null)
   const btn = useRef<HTMLButtonElement>(null)
   const search = useRef<HTMLInputElement>(null)

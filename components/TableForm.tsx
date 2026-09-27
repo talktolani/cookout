@@ -3,6 +3,9 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { submitForm } from '@/lib/submit'
 import { TABLES, REGISTER } from '@/content/event'
+import PhoneField from '@/components/PhoneField'
+import { BY_ISO } from '@/lib/countries'
+import type { PhoneValue } from '@/lib/phone'
 
 export default function TableForm() {
   const router = useRouter()
@@ -11,18 +14,27 @@ export default function TableForm() {
   const [wa, setWa] = useState(false)
   const [mk, setMk] = useState(false)
   const [terms, setTerms] = useState(false)
+  const [phone, setPhone] = useState<PhoneValue>({ e164: '', country: 'MY', valid: false })
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
+    const fd = new FormData(e.currentTarget)
+    if (!String(fd.get('name') ?? '').trim()) { setMsg('Add the name for the door list.'); return }
+    if (!phone.e164) { setMsg('Add your WhatsApp number.'); return }
+    if (!phone.valid) {
+      setMsg(`That doesn't look like a full ${BY_ISO[phone.country]?.name ?? ''} number. Check the flag and the digits.`)
+      return
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(fd.get('email') ?? '').trim())) { setMsg("That email doesn't look right."); return }
     if (!wa) { setMsg('Tick the WhatsApp box so we can send you the address and set times.'); return }
     if (!terms) { setMsg('Please agree to the booking terms.'); return }
     setBusy(true); setMsg(null)
 
-    const fd = new FormData(e.currentTarget)
     const res = await submitForm('table-booking', {
       package: fd.get('package'),
       name: fd.get('name'),
-      whatsapp: fd.get('whatsapp'),
+      whatsapp: phone.e164,
+      whatsapp_country: phone.country,
       email: fd.get('email'),
       party_size: fd.get('party_size'),
       door_list: fd.get('door_list'),
@@ -41,7 +53,7 @@ export default function TableForm() {
         <label htmlFor="package">Package <span className="req">*</span></label>
         <select id="package" name="package" required>
           {TABLES.tiers.map((t) => (
-            <option key={t.slot}>{`${t.name} — ${t.price}, seats ${t.seats}`}</option>
+            <option key={t.slot}>{`${t.name}: ${t.price}, seats ${t.seats}`}</option>
           ))}
         </select>
       </div>
@@ -55,7 +67,7 @@ export default function TableForm() {
       <div className="row2">
         <div className="field">
           <label htmlFor="whatsapp">WhatsApp Number <span className="req">*</span></label>
-          <input id="whatsapp" name="whatsapp" type="tel" placeholder="+60" required />
+          <PhoneField id="whatsapp" name="whatsapp" required onChange={setPhone} />
         </div>
         <div className="field">
           <label htmlFor="email">Email <span className="req">*</span></label>
