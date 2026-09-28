@@ -318,6 +318,9 @@ cookout_email_sends, cookout_buyers, cookout-postmark-webhook.
   non-alcoholic.
 - **Type stays ours:** League Gothic plus Oswald. Donny rejected the wide
   heavy font from the race-weekend reference. Borrow its motion only.
+- **Do not use the Higgsfield element Bunker-1965-DJ-Floor.** Donny says it
+  shows a different warehouse (28 Sep). DJ and party shots wait for his new
+  references.
 - **Puns are about the food**, e.g. "Prepare To Get Messy". Use a few per ad.
 - **Reference 1 (race weekend ad, 28 Sep):** hook is a lock-screen
   notification ("KL, you free Saturday?" / "10 October?"), 9 shots in the
