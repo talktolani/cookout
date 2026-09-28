@@ -6,7 +6,7 @@ container can't reach the Higgsfield CDN, so the build happens there.
 Order: push these files into /home/user/ed with heredocs, then
 `bash setup.sh` (fonts, QR, downloads stills and clips), inject the logo and QR
 into ov.html (replace `__LOGO__` / `__QR__`), `node render.js lock`,
-`python3 hook.py`, `node render.js ov <from> <to>` in 4 parallel slices,
+`python3 hookv.py 0.3` (hook.py is the old still-photo version), `node render.js ov <from> <to>` in 4 parallel slices,
 `python3 comp.py hype_9x16.mp4`, then crop 4:5 with `crop=1080:1350:0:285`.
 Upload with media_upload, PUT from the sandbox with `If-None-Match: *`
 (retry once on a 5xx), then media_confirm.
@@ -25,6 +25,13 @@ Upload with media_upload, PUT from the sandbox with `If-None-Match: *`
     anchored low to cut the sky.
   - Playwright saves a fully opaque card as a 3-channel PNG. comp.py treats
     a 3-channel overlay as the whole frame, otherwise those cards go black.
+  - The hook must move (v3): a 3s Kling clip of the phone still with a
+    black screen, and hookv.py tracks the screen every frame. Dark people
+    behind the phone merge into the screen mask, so it rebuilds any edge
+    that changes the screen's size and median-filters the corners.
+  - The lock screen needs the real iPhone furniture: Dynamic Island,
+    signal/Wi-Fi/battery, the lock icon, flashlight and camera buttons,
+    and the home bar (lock.html).
   - The sandbox is wiped about 10s after the last call and sometimes
     between turns: keep a `sleep 890` background job running and keep
     every script here, not only in the sandbox.
