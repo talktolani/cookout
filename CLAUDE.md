@@ -245,3 +245,36 @@ cookout_email_sends, cookout_buyers, cookout-postmark-webhook.
   button under the field (`.sq-row-phone` in app/preregister/mobile.css),
   because side by side left about 60px for the digits.
 - **Page titles:** no em dashes in `metadata.title` either; use a pipe.
+
+## Meta pixel and Conversions API (added 28 Sep 2026)
+
+- **Every Meta event goes out twice with one event_id**: the browser pixel
+  (lib/meta.ts, fbq) and the server copy (app/api/meta/route.ts, Graph API
+  v23.0). Meta keeps one of each pair. Never change the event_id on one side
+  only, or every conversion counts twice.
+- **Dataset / pixel ID 1092247383161339** ("The Cookout", in the Donny Pkg2 Rep
+  business portfolio). Override with NEXT_PUBLIC_META_PIXEL_ID.
+- **Events:** PageView on every route and ViewContent on /tickets
+  (components/MetaPixel.tsx), Lead after any successful submitForm
+  (lib/submit.ts, skipped when the `_hp` honeypot is filled), InitiateCheckout
+  in the buy pop-up before it sends people to TicketMelon
+  (components/BuyModal.tsx, value 65 before Early Bird closes, 85 after).
+  Purchase happens on TicketMelon, which this site can't see.
+- **Hashing happens on the server only.** The browser posts raw email,
+  WhatsApp (E.164) and names to /api/meta over HTTPS; the route normalises
+  and SHA-256 hashes them and adds IP, user agent, _fbp and _fbc (built from
+  fbclid on the first page view if the cookie isn't set yet). external_id is
+  the hashed ck_v visitor id, identical on both sides.
+- **Env vars (Vercel, Production):** META_CAPI_TOKEN (without it the route
+  answers 204 and sends nothing), META_TEST_EVENT_CODE (routes events to the
+  Test events tab: remove it after checking or real events never count),
+  NEXT_PUBLIC_FB_DOMAIN_VERIFICATION (adds the facebook-domain-verification
+  meta tag). `create_project_env` answers 403 through the Vercel connector,
+  like `assign_alias`: Donny adds env vars in the Vercel dashboard, then a
+  redeploy (or any push to main) picks them up.
+- **/privacy exists because Meta's terms require a notice** on sites that run
+  the pixel. Keep it in step with what lib/meta.ts actually sends.
+- metaEvent() does nothing when navigator.webdriver is true, so headless
+  Playwright checks don't pollute the ad data. To test locally, launch
+  Chromium with `--disable-blink-features=AutomationControlled` and point
+  META_GRAPH_URL at a mock server.

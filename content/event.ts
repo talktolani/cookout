@@ -28,7 +28,7 @@ export const TICKETS = {
   ga: {
     name: 'General Admission',
     price: 'RM 85',
-    note: 'From 3 October, online, until the night before.',
+    note: 'From 3 October, online, right up until doors.',
   },
   door: { name: 'At The Door', price: 'RM 100', note: 'On the night, at the venue.' },
 } as const

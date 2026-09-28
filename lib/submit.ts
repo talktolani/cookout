@@ -1,4 +1,5 @@
 import { track } from './analytics'
+import { metaEvent, userFromFields } from './meta'
 
 const ENDPOINT = process.env.NEXT_PUBLIC_CAPTURE_ENDPOINT ?? ''
 
@@ -54,6 +55,9 @@ export async function submitForm(
     })
 
     if (!res.ok) return { status: 'error', message: 'Something went wrong. Try again in a moment.' }
+    // A filled honeypot still gets a 200 from the endpoint; keep bots out of
+    // the ad optimisation data too.
+    if (!fields._hp) metaEvent('Lead', { content_name: form }, userFromFields(fields))
     return { status: 'ok' }
   } catch {
     return { status: 'error', message: 'Something went wrong. Try again in a moment.' }

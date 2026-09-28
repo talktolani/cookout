@@ -1,7 +1,9 @@
 'use client'
 import { useEffect, useRef, useState } from 'react'
 import { submitForm } from '@/lib/submit'
+import { metaEvent } from '@/lib/meta'
 import { SALES } from '@/content/sales'
+import { TICKETS } from '@/content/event'
 import { BUY_EVENT, LEAD_KEY, checkoutHref } from '@/lib/checkout'
 import LiquidMetalButton from '@/components/LiquidMetalButton'
 import PhoneField from '@/components/PhoneField'
@@ -67,6 +69,13 @@ export default function BuyModal() {
     if (!phone.e164) { setMsg('Add your WhatsApp number.'); return }
     if (!phone.valid) { setMsg(`That doesn't look like a full ${BY_ISO[phone.country]?.name ?? ''} number. Check the flag and the digits.`); return }
     setMsg(null); setBusy(true)
+    // Fired before the save so it has time to leave before we navigate away.
+    if (!fd.get('_hp')) metaEvent('InitiateCheckout', {
+      content_name: track, currency: 'MYR',
+      value: Date.now() < Date.parse(TICKETS.earlyBird.closesISO) ? 65 : 85,
+    }, {
+      email, phone: phone.e164, first_name: name.split(' ')[0], last_name: name.split(' ').slice(1).join(' '), country: phone.country,
+    })
     // One Name field: first word is the first name, the rest the last name.
     const [firstName, ...rest] = name.split(' ')
     // One consent box covers email and WhatsApp: whatsapp_optin and
