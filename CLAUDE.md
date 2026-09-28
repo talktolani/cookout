@@ -300,3 +300,26 @@ cookout_email_sends, cookout_buyers, cookout-postmark-webhook.
 - **Instant-form leads never touch this site or AIOS.** They sit in Meta's
   Leads Center until something pulls them (a Make scenario posting to the
   capture endpoint as form preregister was proposed, not built).
+
+## Ad creative rules (added 28 Sep 2026, from Donny)
+
+- **Quote the Higgsfield cost before generating anything** (stills or video)
+  and wait for Donny's yes. Rates seen on the account 27 Sep: GPT Image 2.0
+  6.5 credits, Nano Banana Pro 2, Kling v3.0 pro 5s silent 7.5. Check
+  `transactions` after the first job of a batch and re-quote if a rate differs.
+- **Show only confirmed food.** Confirmed 28 Sep: hot dogs, crispy tenders,
+  jollof rice and chicken, burgers, fried chicken sandwiches. BBQ vendors are
+  NOT confirmed, so no BBQ, brisket, ribs, satay or smoke in new creative.
+  The site still says "Barbecue" in places (content/sales.ts, content/event.ts,
+  app/layout.tsx metadata) and /tickets names Firepit: ask Donny before changing.
+- **Casting:** hip hop and streetwear crowd, 18 to 40. Roughly 60% the
+  Afrobeats and Amapiano crowd (African and Black diaspora), 25 to 30% Malay,
+  the rest mixed (Chinese, Indian, white). Drinks on Malay guests read as
+  non-alcoholic.
+- **Type stays ours:** League Gothic plus Oswald. Donny rejected the wide
+  heavy font from the race-weekend reference. Borrow its motion only.
+- **Puns are about the food**, e.g. "Prepare To Get Messy". Use a few per ad.
+- **Reference 1 (race weekend ad, 28 Sep):** hook is a lock-screen
+  notification ("KL, you free Saturday?" / "10 October?"), 9 shots in the
+  first 6s, a cut on every beat (~0.6s at ~103 BPM), double speed on the
+  turn to the party, 2 to 4 words per card, QR end card for about 2s.
