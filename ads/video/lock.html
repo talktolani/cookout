@@ -1,0 +1,21 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+*{margin:0;box-sizing:border-box}html,body{width:848px;height:2000px;overflow:hidden;background:#000}
+#s{position:relative;width:848px;height:2000px;overflow:hidden;font-family:Metropolis,Montserrat,sans-serif;
+background:radial-gradient(120% 60% at 30% 95%,#2a3a18 0%,rgba(0,0,0,0) 60%),radial-gradient(100% 50% at 90% 10%,#1b2433 0%,rgba(0,0,0,0) 70%),#07080a}
+.day{position:absolute;top:210px;width:100%;text-align:center;color:rgba(255,255,255,.88);font-size:46px;font-weight:600}
+.clock{position:absolute;top:262px;width:100%;text-align:center;color:rgba(255,255,255,.95);font-size:250px;font-weight:700;letter-spacing:-.02em;line-height:1}
+.n{position:absolute;left:36px;right:36px;border-radius:52px;background:rgba(236,236,240,.93);padding:34px 40px 38px 40px;box-shadow:0 10px 40px rgba(0,0,0,.35)}
+.h{display:flex;align-items:center;gap:22px;color:#5b5b60;font-size:30px;font-weight:600;letter-spacing:.06em}
+.ic{width:62px;height:62px;border-radius:16px;background:linear-gradient(#5ff777,#1ec640);display:flex;align-items:center;justify-content:center}
+.ic i{display:block;width:34px;height:28px;background:#fff;border-radius:50%}
+.h span.t{margin-left:auto;letter-spacing:0;font-weight:500;font-size:30px}
+.b{margin-top:16px;color:#0b0b0c;font-size:52px;font-weight:700;letter-spacing:-.01em}
+</style></head><body><div id="s">
+<div class="day">Monday, 5 October</div><div class="clock">7:42</div>
+<div class="n" id="n1"><div class="h"><div class="ic"><i></i></div>MESSAGES<span class="t">now</span></div><div class="b">KL, you free Saturday?</div></div>
+<div class="n" id="n2"><div class="h"><div class="ic"><i></i></div>MESSAGES<span class="t">now</span></div><div class="b">10 October?</div></div>
+</div><script>
+function frame(f){const s1=5,s2=21,dur=6;const ease=t=>{t=Math.min(Math.max(t,0),1);return 1-Math.pow(1-t,3)};
+ const pos=(el,start,top)=>{const t=(f-start)/dur,e=ease(t);el.style.top=(top-120*(1-e))+'px';el.style.opacity=f<start?0:Math.min(1,t*2);el.style.transform='scale('+(0.94+0.06*e)+')'};
+ pos(document.getElementById('n1'),s1,640);pos(document.getElementById('n2'),s2,890)}
+</script></body></html>

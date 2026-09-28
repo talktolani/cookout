@@ -1,0 +1,22 @@
+[
+ {"id":"hook","b":3,"src":"hook"},
+ {"id":"crew","b":3,"clip":8,"grade":{"gamma":1.4,"zoom":1.14,"anchor":0.64},"lines":["YOUR SATURDAY PLAN","IS RIGHT HERE"],"hi":1},
+ {"id":"hotdog","b":2,"still":"src/hotdog.png","lines":["HOT DOGS"]},
+ {"id":"tenders","b":2,"clip":3,"pick":"calm","lines":["CRISPY TENDERS"]},
+ {"id":"jollof","b":2,"clip":4,"pick":"calm","lines":["JOLLOF WARS:","SETTLED SATURDAY."],"hi":1},
+ {"id":"sandwich","b":2,"clip":5,"pick":"calm","lines":["FRIED CHICKEN","SANDWICHES"]},
+ {"id":"burger","b":3,"clip":1,"pick":"calm","lines":["PREPARE TO","GET MESSY."],"hi":1},
+ {"id":"spread","b":2,"clip":6,"lines":["BUN INTENDED."]},
+ {"id":"handoff","b":2,"clip":12,"lines":["CRISPY TENDERS.","CRISPIER FITS."],"hi":1},
+ {"id":"pickle","b":2,"clip":9,"lines":["PICKLEBALL","IN PAIRS"]},
+ {"id":"dom","b":2,"clip":10,"lines":["SPADES &","DOMINOES"]},
+ {"id":"spades","b":2,"clip":11,"lines":["WINNER","STAYS ON."],"hi":1},
+ {"id":"laugh","b":2,"clip":13,"lines":["COME HUNGRY."]},
+ {"id":"turn","b":2,"kind":"type","lines":["THE PARTY","AFTER DARK?"]},
+ {"id":"p1","b":2,"kind":"strobe","lines":["90s R&B."]},
+ {"id":"p2","b":2,"kind":"strobe","lines":["AFROBEATS."]},
+ {"id":"p3","b":2,"kind":"strobe","lines":["AMAPIANO."]},
+ {"id":"logo","b":3,"kind":"logo"},
+ {"id":"info","b":3,"kind":"info"},
+ {"id":"end","b":4,"kind":"end"}
+]
