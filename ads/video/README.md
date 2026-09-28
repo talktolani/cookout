@@ -6,7 +6,7 @@ container can't reach the Higgsfield CDN, so the build happens there.
 Order: push these files into /home/user/ed with heredocs, then
 `bash setup.sh` (fonts, QR, downloads stills and clips), inject the logo and QR
 into ov.html (replace `__LOGO__` / `__QR__`), `node render.js lock`,
-`python3 hookv.py 0.3` (hook.py is the old still-photo version), `node render.js ov <from> <to>` in 4 parallel slices,
+`python3 hooks.py 0.3` (hooks.py is current; hookv.py holds screen() and the v3 tracker, hook.py the still-photo v1), `node render.js ov <from> <to>` in 4 parallel slices,
 `python3 comp.py hype_9x16.mp4`, then crop 4:5 with `crop=1080:1350:0:285`.
 Upload with media_upload, PUT from the sandbox with `If-None-Match: *`
 (retry once on a 5xx), then media_confirm.
@@ -29,6 +29,12 @@ Upload with media_upload, PUT from the sandbox with `If-None-Match: *`
     black screen, and hookv.py tracks the screen every frame. Dark people
     behind the phone merge into the screen mask, so it rebuilds any edge
     that changes the screen's size and median-filters the corners.
+  - v3 tracked the screen onto a swaying phone and Donny called it
+    glitchy: the phone and screen graphics must stay still, only the
+    background moves. v4 (hooks.py) stabilises the whole clip on the phone
+    with ECC on a ring around the phone edge, fixes the screen quad, and
+    drops the push-in. Checked: phone drift median 1.5px, screen graphics
+    0.14 per-frame change, background 3.2.
   - The lock screen needs the real iPhone furniture: Dynamic Island,
     signal/Wi-Fi/battery, the lock icon, flashlight and camera buttons,
     and the home bar (lock.html).
