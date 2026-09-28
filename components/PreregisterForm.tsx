@@ -164,6 +164,29 @@ export default function PreregisterForm() {
         </button>
       )}
 
+      {/* Meta's instant form sends people here after they've already opted in
+          (its end button can only open the ad's URL), so give them a way past
+          the form instead of asking twice. No Lead fires: Meta counted the form. */}
+      {step === 0 && (
+        <a
+          className="sq-back"
+          href={checkoutHref('preregister-skip', 'preregister')}
+          suppressHydrationWarning // the server copy has no UTMs; the click rebuilds it
+          onClick={(e) => {
+            e.preventDefault()
+            const href = checkoutHref('preregister-skip', 'preregister')
+            metaEvent('InitiateCheckout', {
+              content_name: 'preregister-skip', currency: 'MYR',
+              value: Date.now() < Date.parse(TICKETS.earlyBird.closesISO) ? 65 : 85,
+            })
+            setTimeout(() => { window.location.href = href }, 350)
+          }}
+          data-track="preregister-skip"
+        >
+          Already signed up? Go Straight To Tickets
+        </a>
+      )}
+
       <ul className="sq-benefits">
         <li>Free to join</li>
         <li>Free tournament entry</li>

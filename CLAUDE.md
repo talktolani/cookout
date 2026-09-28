@@ -291,3 +291,12 @@ cookout_email_sends, cookout_buyers, cookout-postmark-webhook.
   "pay at the door" option, so sending it to a checkout would contradict it.
 - The Welcome sequence in AIOS still sends the ticket link to anyone who
   opted in and didn't buy.
+- **"Already signed up? Go Straight To Tickets"** sits under step 1 of
+  /preregister (added 28 Sep). Meta's instant form end button can only open
+  the ad's own URL, which is /preregister, so people who just filled the form
+  would otherwise be asked again. The link fires InitiateCheckout only (no
+  Lead, Meta already counted the form) and carries the visitor's UTMs to
+  TicketMelon, tagged utm_content=preregister-skip when there are none.
+- **Instant-form leads never touch this site or AIOS.** They sit in Meta's
+  Leads Center until something pulls them (a Make scenario posting to the
+  capture endpoint as form preregister was proposed, not built).
