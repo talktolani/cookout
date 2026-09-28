@@ -278,3 +278,16 @@ cookout_email_sends, cookout_buyers, cookout-postmark-webhook.
   Playwright checks don't pollute the ad data. To test locally, launch
   Chromium with `--disable-blink-features=AutomationControlled` and point
   META_GRAPH_URL at a mock server.
+
+## Opt-in goes straight to TicketMelon (added 28 Sep 2026, on Donny's instruction)
+
+- **/preregister and the full-funnel ticket form (TicketCheckout on /) no
+  longer land on /thanks.** After a successful submit they fire Lead, then
+  InitiateCheckout, wait 350ms for the beacons, and send the visitor to
+  TicketMelon via checkoutHref(track, medium), which carries the visitor's
+  UTMs or tags utm_medium=preregister / funnel. They also set LEAD_KEY so
+  the /tickets buy pop-up doesn't ask them again.
+- **The free guest list (RegisterForm on /) still goes to /thanks.** It's the
+  "pay at the door" option, so sending it to a checkout would contradict it.
+- The Welcome sequence in AIOS still sends the ticket link to anyone who
+  opted in and didn't buy.

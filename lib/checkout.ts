@@ -5,7 +5,7 @@ const UTM = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_conten
 // TicketMelon link with attribution. The visitor's own UTM tags win (paid ads,
 // Instagram bio link). With none, we tag it as the website and name the button
 // they pressed, so TicketMelon's order export shows which CTA sold the ticket.
-export function checkoutHref(track: string): string {
+export function checkoutHref(track: string, medium = 'tickets_page'): string {
   const u = new URL(SALES.checkoutUrl)
   if (typeof window === 'undefined') return u.toString()
   const q = new URLSearchParams(window.location.search)
@@ -16,7 +16,7 @@ export function checkoutHref(track: string): string {
   }
   if (!carried) {
     u.searchParams.set('utm_source', 'website')
-    u.searchParams.set('utm_medium', 'tickets_page')
+    u.searchParams.set('utm_medium', medium)
     u.searchParams.set('utm_content', track)
   }
   return u.toString()

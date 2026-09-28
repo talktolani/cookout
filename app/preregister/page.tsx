@@ -39,7 +39,7 @@ export default function Preregister() {
           <p className="facts">{EVENT.dateShort} | {EVENT.timeShort}</p>
 
           <p className="sq-offer">
-            Pre-register free, get the cheapest tickets first. Early Bird closes {TICKETS.earlyBird.closes}.
+            Sign up free and we&apos;ll take you straight to Early Bird tickets. Early Bird closes {TICKETS.earlyBird.closes}.
           </p>
 
           <Countdown iso={TICKETS.earlyBird.closesISO} label="until Early Bird closes" />

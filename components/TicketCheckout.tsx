@@ -1,6 +1,7 @@
 'use client'
 import { useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { metaEvent } from '@/lib/meta'
+import { checkoutHref, LEAD_KEY } from '@/lib/checkout'
 import { submitForm } from '@/lib/submit'
 import { TICKETS, REGISTER } from '@/content/event'
 import PhoneField from './PhoneField'
@@ -17,7 +18,6 @@ import type { PhoneValue } from '@/lib/phone'
  * opt-in is captured even if payment is abandoned.
  */
 export default function TicketCheckout() {
-  const router = useRouter()
   const [busy, setBusy] = useState(false)
   const [msg, setMsg] = useState<string | null>(null)
   const [wa, setWa] = useState(false)
@@ -44,7 +44,18 @@ export default function TicketCheckout() {
     }, wa, mk)
 
     setBusy(false)
-    if (res.status === 'ok') router.push('/thanks?ticket=1')
+    if (res.status === 'ok') {
+      // Opted in: on to TicketMelon to pay (28 Sep), same as /preregister.
+      try { sessionStorage.setItem(LEAD_KEY, '1') } catch {}
+      metaEvent('InitiateCheckout', {
+        content_name: 'funnel-checkout', currency: 'MYR',
+        value: Date.now() < Date.parse(TICKETS.earlyBird.closesISO) ? 65 : 85,
+      }, {
+        email: String(fd.get('email') ?? ''), phone: phone.e164,
+        first_name: String(fd.get('first_name') ?? ''), last_name: String(fd.get('last_name') ?? ''), country: phone.country,
+      })
+      setTimeout(() => { window.location.href = checkoutHref('funnel-checkout', 'funnel') }, 350)
+    }
     else if (res.status === 'not_connected') setMsg('Checkout is not connected yet. Nothing was charged.')
     else setMsg(res.message)
   }

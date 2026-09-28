@@ -1,7 +1,8 @@
 'use client'
 import { useEffect, useRef, useState } from 'react'
-import { useRouter } from 'next/navigation'
 import { submitForm } from '@/lib/submit'
+import { metaEvent } from '@/lib/meta'
+import { checkoutHref, LEAD_KEY } from '@/lib/checkout'
 import { TICKETS } from '@/content/event'
 import PhoneField from '@/components/PhoneField'
 import { BY_ISO } from '@/lib/countries'
@@ -16,7 +17,6 @@ const STEPS = [
 type Key = (typeof STEPS)[number]['key']
 
 export default function PreregisterForm() {
-  const router = useRouter()
   const [step, setStep] = useState(0)
   const [values, setValues] = useState<Record<Key, string>>({ first_name: '', email: '', whatsapp: '' })
   // The WhatsApp step uses the flag picker; null until it has been on screen once.
@@ -68,10 +68,19 @@ export default function PreregisterForm() {
     setBusy(false)
 
     if (res.status === 'ok') {
-      // First name rides to /thanks in sessionStorage, never in the URL.
-      try { sessionStorage.setItem('cookout_first_name', values.first_name.trim()) } catch {}
+      // Opted in: straight on to TicketMelon while they're warm (28 Sep).
+      // The Welcome sequence still sends the link to anyone who doesn't buy.
+      try {
+        sessionStorage.setItem('cookout_first_name', values.first_name.trim())
+        sessionStorage.setItem(LEAD_KEY, '1') // /tickets skips the pop-up for them
+      } catch {}
       setDone(true)
-      router.push('/thanks')
+      metaEvent('InitiateCheckout', {
+        content_name: 'preregister', currency: 'MYR',
+        value: Date.now() < Date.parse(TICKETS.earlyBird.closesISO) ? 65 : 85,
+      }, { email: values.email, phone: phone?.e164, first_name: values.first_name, country: phone?.country })
+      // A beat for the Lead and InitiateCheckout beacons before we leave.
+      setTimeout(() => { window.location.href = checkoutHref('preregister', 'preregister') }, 350)
     }
     else if (res.status === 'not_connected') setMsg('Not connected yet. Nothing was saved.')
     else setMsg(res.message)
@@ -80,11 +89,8 @@ export default function PreregisterForm() {
   if (done) {
     return (
       <div className="sq-done">
-        <h2>You&apos;re on the list.</h2>
-        <p>
-          We&apos;ll message you on WhatsApp the moment Early Bird opens. {TICKETS.earlyBird.price},
-          through {TICKETS.earlyBird.closes}.
-        </p>
+        <h2>You&apos;re in.</h2>
+        <p>Taking you to Early Bird tickets on TicketMelon now.</p>
       </div>
     )
   }
@@ -143,7 +149,7 @@ export default function PreregisterForm() {
           />
         )}
         <button className="btn sq-btn" type="submit" disabled={busy} data-track={last ? 'preregister-submit' : `preregister-next-${step + 1}`}>
-          {busy ? 'One moment' : last ? 'Get First Access' : 'Next'}
+          {busy ? 'One moment' : last ? 'Continue To Tickets' : 'Next'}
         </button>
       </div>
 
