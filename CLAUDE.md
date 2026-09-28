@@ -314,7 +314,8 @@ cookout_email_sends, cookout_buyers, cookout-postmark-webhook.
   app/layout.tsx metadata) and /tickets names Firepit: ask Donny before changing.
 - **Casting:** hip hop and streetwear crowd, 18 to 40. Roughly 60% the
   Afrobeats and Amapiano crowd (African and Black diaspora), 25 to 30% Malay,
-  the rest mixed (Chinese, Indian, white). Drinks on Malay guests read as
+  the rest mixed (Chinese, Indian, white). No headscarves in
+  casting (Donny, 28 Sep). Drinks on Malay guests read as
   non-alcoholic.
 - **Type stays ours:** League Gothic plus Oswald. Donny rejected the wide
   heavy font from the race-weekend reference. Borrow its motion only.
