@@ -303,15 +303,18 @@ cookout_email_sends, cookout_buyers, cookout-postmark-webhook.
 
 ## Ad creative rules (added 28 Sep 2026, from Donny)
 
+- **Meta ads run from Bunker 1965's ad account** (29 Sep), by their
+  agency, on our dataset. The brief is ads/handover/. Donny's Instagram is
+  locked, so Instagram placements use Bunker 1965's Instagram.
+
 - **Quote the Higgsfield cost before generating anything** (stills or video)
   and wait for Donny's yes. Rates seen on the account 27 Sep: GPT Image 2.0
   6.5 credits, Nano Banana Pro 2, Kling v3.0 pro 5s silent 7.5. Check
   `transactions` after the first job of a batch and re-quote if a rate differs.
-- **Show only confirmed food.** Confirmed 28 Sep: hot dogs, crispy tenders,
-  jollof rice and chicken, burgers, fried chicken sandwiches. BBQ vendors are
-  NOT confirmed, so no BBQ, brisket, ribs, satay or smoke in new creative.
-  The site still says "Barbecue" in places (content/sales.ts, content/event.ts,
-  app/layout.tsx metadata) and /tickets names Firepit: ask Donny before changing.
+- **Show only confirmed food.** Confirmed 29 Sep (Donny): BBQ is still on,
+  plus hot dogs, crispy tenders, jollof rice and chicken, burgers and fried
+  chicken sandwiches. (On 28 Sep BBQ was briefly marked unconfirmed; that is
+  reversed, so "Barbecue" on the site and BBQ on the posters are fine.)
 - **Casting:** hip hop and streetwear crowd, 18 to 40. Roughly 60% the
   Afrobeats and Amapiano crowd (African and Black diaspora), 25 to 30% Malay,
   the rest mixed (Chinese, Indian, white). No headscarves in
