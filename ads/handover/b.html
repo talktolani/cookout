@@ -1,0 +1,70 @@
+<section class="pb">
+ <h2><span class="n">02</span>Event Facts For Copy</h2>
+ <table>
+  <tr><th style="width:30%">Fact</th><th>Use exactly</th></tr>
+  <tr><td>Name</td><td>The Cookout</td></tr>
+  <tr><td>Date and time</td><td>Saturday 10 October 2026, 4PM till midnight (doors 4PM)</td></tr>
+  <tr><td>Venue</td><td>Bunker 1965, Red Warehouse, Kuala Lumpur</td></tr>
+  <tr><td>What happens</td><td>Food all afternoon, pickleball in pairs, spades and dominoes, then 90s R&amp;B, Afrobeats and Amapiano after dark. DJ Shaggz on the decks.</td></tr>
+  <tr><td>Food (confirmed)</td><td>Hot dogs, crispy tenders, jollof rice and chicken, burgers, fried chicken sandwiches</td></tr>
+  <tr><td>Included</td><td>First drink's on us</td></tr>
+  <tr><td>Tickets</td><td>Early Bird RM 65 until Fri 2 Oct, 11:59PM. Then RM 85 online, on sale right up until doors. RM 100 at the door.</td></tr>
+  <tr><td>Free list</td><td>Joining the list is free. It gets people the Early Bird link. It's not a ticket.</td></tr>
+ </table>
+ <h3>Voice</h3>
+ <p>Short, warm, a bit cheeky. Food puns are welcome ("Prepare To Get Messy", "Crispy Tenders. Crispier Fits.", "Bun Intended."). Numerals, not words (4PM, 10 Oct). Contractions always. No em dashes. Buttons and headlines in Title Case.</p>
+ <h3>Audience</h3>
+ <p>Hip hop and streetwear crowd aged 18 to 40 in the Klang Valley: the Afrobeats and Amapiano crowd first, Malay friends and the wider KL mix around them. People who'd go to a day party, a pickleball social or an R&amp;B night.</p>
+
+</section>
+<section class="pb">
+ <h2><span class="n">03</span>Tracking: Our Dataset, Your Ad Account</h2>
+ <p>Our site already sends every event twice: once from the browser pixel and once from our server (Conversions API), with a shared event ID so Meta counts each one once. Leads captured through iOS, ad blockers or slow connections still count. <b>You don't need to install anything.</b> We share the dataset with your business and you select it in the campaign.</p>
+ <h3>Setting It Up</h3>
+ <ol>
+  <li><span class="stepnum">1</span>Send Donny your <b>Business portfolio ID</b> (Business settings, Business info).</li>
+  <li><span class="stepnum">2</span>We share the dataset <b>The Cookout</b> (<code>1092247383161339</code>) with your business: Business settings, Data sources, Datasets, Assign partners.</li>
+  <li><span class="stepnum">3</span>In your Business settings, open the shared dataset and connect your ad account to it.</li>
+  <li><span class="stepnum">4</span>We also grant your business access to The Cookout Facebook Page (ID <code>1459305463923066</code>) so ads can run under it.</li>
+  <li><span class="stepnum">5</span>In Events Manager, confirm you can see recent PageView and Lead activity on the dataset. Then build.</li>
+ </ol>
+ <p class="k" style="text-transform:none;letter-spacing:0;font-size:8pt">Meta renames these menus from time to time. If a label doesn't match, the dataset's Settings tab will show the sharing option.</p>
+ <h3>Events On The Dataset</h3>
+ <table>
+  <tr><th style="width:24%">Event</th><th style="width:36%">When it fires</th><th>Use it for</th></tr>
+  <tr><td><b>PageView</b></td><td>Every page on thecookoutevent.com</td><td>Retargeting audiences</td></tr>
+  <tr><td><b>ViewContent</b></td><td>The /tickets page</td><td>Retargeting warm visitors</td></tr>
+  <tr><td><b>Lead</b></td><td>Someone completes the sign-up form</td><td><b>The optimisation event</b></td></tr>
+  <tr><td><b>InitiateCheckout</b></td><td>Right before we send them to TicketMelon (value RM 65, RM 85 after Early Bird)</td><td>Reporting and retargeting people who didn't buy</td></tr>
+ </table>
+ <div class="box warn">Please don't add events with Meta's Event Setup Tool, and don't install another pixel or partner integration on the site. Extra events would double count and confuse the optimisation. Purchases happen on TicketMelon, so the dataset doesn't see them. We match sales to your ads with the UTMs (section 5).</div>
+</section>
+
+<section class="pb">
+ <h2><span class="n">04</span>Campaign Structure</h2>
+ <h3>Campaign 1: Cold Prospecting (Launch Now)</h3>
+ <table>
+  <tr><th style="width:30%">Setting</th><th>Value</th></tr>
+  <tr><td>Campaign name</td><td><code>COOKOUT_TOFU_Leads</code></td></tr>
+  <tr><td>Objective</td><td>Leads</td></tr>
+  <tr><td>Conversion location</td><td>Website (no instant forms: we need leads to land in our system, and instant form leads don't)</td></tr>
+  <tr><td>Dataset and event</td><td>The Cookout, <b>Lead</b></td></tr>
+  <tr><td>Performance goal</td><td>Maximise number of conversions</td></tr>
+  <tr><td>Ad set name</td><td><code>KL30km_18-40_AdvPlus</code></td></tr>
+  <tr><td>Location</td><td>Kuala Lumpur, plus 30 km radius (covers PJ, Subang, Cheras, Mont Kiara)</td></tr>
+  <tr><td>Age</td><td>18 to 40</td></tr>
+  <tr><td>Audience</td><td>Advantage+ audience, with these suggestions: Afrobeats, Amapiano, Hip hop music, Contemporary R&amp;B, Streetwear, Pickleball, Nightlife, Street food</td></tr>
+  <tr><td>Language</td><td>English</td></tr>
+  <tr><td>Placements</td><td>Advantage+ placements</td></tr>
+  <tr><td>Schedule</td><td>Start now. End Saturday 10 October, 4PM.</td></tr>
+  <tr><td>Advantage+ creative</td><td>Turn <b>off</b> text improvements and generated text. Meta's rewrites can add claims we can't back up.</td></tr>
+ </table>
+ <h3>Campaign 2: Retargeting (Start Thursday 1 October)</h3>
+ <p>Audience: website visitors in the last 14 days from our dataset, plus anyone who triggered InitiateCheckout. Exclude nobody for now: we can't see purchases, and a reminder to buyers is harmless. Destination: <code>https://thecookoutevent.com/tickets</code> with the same URL parameters. This campaign can show prices and the Early Bird countdown. We'll send creative and copy for it by Wednesday night.</p>
+ <h3>Timeline</h3>
+ <div class="flow">
+  <div><b>30 Sep to 2 Oct</b>Cold ads drive sign-ups. Retargeting pushes the Early Bird deadline, Fri 11:59PM.</div>
+  <div><b>3 to 9 Oct</b>Cold ads keep going. Retargeting moves to RM 85 and "Don't miss it".</div>
+  <div><b>10 Oct</b>"Tonight" push until 4PM doors. Tickets stay on sale online.</div>
+ </div>
+</section>
