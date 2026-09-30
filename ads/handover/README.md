@@ -7,7 +7,8 @@ and printed to A4 with Playwright in the Higgsfield sandbox, where the live
 site and TicketMelon can be screenshotted (this container can't reach them).
 
 v1 PDF (superseded, says no BBQ): https://d2ol7oe51mr4n9.cloudfront.net/user_3BCuYCQwnreJpxyBr1ZoHKJc0Ay/cc7ba108-cb6b-4dd6-9165-aeb19f13831a.pdf
-v2 PDF (29 Sep, BBQ confirmed, Bunker 1965's ad account and Instagram): https://d2ol7oe51mr4n9.cloudfront.net/user_3BCuYCQwnreJpxyBr1ZoHKJc0Ay/d7cb491a-1673-4496-81a4-5e00741f40cd.pdf
+v3 PDF (30 Sep, current: Bunker's own dataset, Bunker Page and Instagram, Thu 1 Oct launch, budget schedule, retargeting copy): https://d2ol7oe51mr4n9.cloudfront.net/user_3BCuYCQwnreJpxyBr1ZoHKJc0Ay/7a28cec3-ca07-43b1-a04c-58b2b211fc25.pdf
+v2 PDF (29 Sep, superseded): https://d2ol7oe51mr4n9.cloudfront.net/user_3BCuYCQwnreJpxyBr1ZoHKJc0Ay/d7cb491a-1673-4496-81a4-5e00741f40cd.pdf
 
 Lessons:
 - Screenshots: block facebook.com/net, /api/meta and /c in Playwright so

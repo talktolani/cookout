@@ -18,53 +18,59 @@
 
 </section>
 <section class="pb">
- <h2><span class="n">03</span>Tracking: Our Dataset, Your Ad Account</h2>
- <p>Our site already sends every event twice: once from the browser pixel and once from our server (Conversions API), with a shared event ID so Meta counts each one once. Leads captured through iOS, ad blockers or slow connections still count. <b>You don't need to install anything.</b> We share the dataset with your business and you select it in the campaign.</p>
+ <h2><span class="n">03</span>Tracking: Your Dataset, Our Site</h2>
+ <p>Meta won't let a new business share its dataset with a partner for several weeks, so we're doing it the other way round. <b>You create a dataset in your business, and our site sends every event into it</b> (as well as into ours). You see everything in your own Ads Manager and there's nothing for you to install.</p>
  <h3>Setting It Up</h3>
  <ol>
-  <li><span class="stepnum">1</span>Send Donny your <b>Business portfolio ID</b> (Business settings, Business info).</li>
-  <li><span class="stepnum">2</span>We share the dataset <b>The Cookout</b> (<code>1092247383161339</code>) with your business: Business settings, Data sources, Datasets, Assign partners.</li>
-  <li><span class="stepnum">3</span>In your Business settings, open the shared dataset and connect your ad account to it.</li>
-  <li><span class="stepnum">4</span>We also grant your business access to The Cookout Facebook Page (ID <code>1459305463923066</code>) so ads can run under it. For Instagram placements, select Bunker 1965's Instagram account in the ad's Identity section.</li>
-  <li><span class="stepnum">5</span>In Events Manager, confirm you can see recent PageView and Lead activity on the dataset. Then build.</li>
+  <li><span class="stepnum">1</span>In the Bunker 1965 business, open <b>Events Manager</b>, click <b>Connect Data Sources</b>, pick <b>Web</b>, name it <b>The Cookout KL</b> and click Create. If it asks how to install the code, close that window.</li>
+  <li><span class="stepnum">2</span>Send Donny the <b>Dataset ID</b> (the long number under the name). We add it to every page on thecookoutevent.com, usually within the hour.</li>
+  <li><span class="stepnum">3</span><b>Recommended:</b> in the dataset open Settings, Conversions API, <b>Generate Access Token</b>, and send it to Donny privately (never in a group). It adds our server's copy of each event, so sign-ups from iPhones and ad blockers still count.</li>
+  <li><span class="stepnum">4</span>Open thecookoutevent.com/preregister on your phone. <b>PageView</b> should show on the dataset's Overview within a few minutes. We'll send 1 real test sign-up so <b>Lead</b> shows as active too.</li>
+  <li><span class="stepnum">5</span>In the ad set pick conversion location Website, dataset The Cookout KL, event <b>Lead</b>. If Lead still shows as inactive, message Donny and we'll fire it straight away.</li>
  </ol>
- <p class="k" style="text-transform:none;letter-spacing:0;font-size:8pt">Meta renames these menus from time to time. If a label doesn't match, the dataset's Settings tab will show the sharing option.</p>
  <h3>Events On The Dataset</h3>
  <table>
   <tr><th style="width:24%">Event</th><th style="width:36%">When it fires</th><th>Use it for</th></tr>
   <tr><td><b>PageView</b></td><td>Every page on thecookoutevent.com</td><td>Retargeting audiences</td></tr>
   <tr><td><b>ViewContent</b></td><td>The /tickets page</td><td>Retargeting warm visitors</td></tr>
   <tr><td><b>Lead</b></td><td>Someone completes the sign-up form</td><td><b>The optimisation event</b></td></tr>
-  <tr><td><b>InitiateCheckout</b></td><td>Right before we send them to TicketMelon (value RM 65, RM 85 after Early Bird)</td><td>Reporting and retargeting people who didn't buy</td></tr>
+  <tr><td><b>InitiateCheckout</b></td><td>Right before we send them to TicketMelon (value RM 65, RM 85 after Early Bird)</td><td>Reporting and retargeting</td></tr>
  </table>
- <div class="box warn">Please don't add events with Meta's Event Setup Tool, and don't install another pixel or partner integration on the site. Extra events would double count and confuse the optimisation. Purchases happen on TicketMelon, so the dataset doesn't see them. We match sales to your ads with the UTMs (section 5).</div>
+ <div class="box warn">Please don't add events with Meta's Event Setup Tool, and don't install this or any other pixel on the site yourselves. Extra events would double count and confuse the optimisation. Purchases happen on TicketMelon, so the dataset doesn't see them. We match sales to your ads with the UTMs (section 5).</div>
 </section>
 
 <section class="pb">
- <h2><span class="n">04</span>Campaign Structure</h2>
- <h3>Campaign 1: Cold Prospecting (Launch Now)</h3>
+ <h2><span class="n">04</span>Campaigns, Budget And Schedule</h2>
+ <h3>Campaign 1: Cold Prospecting (Publish Today)</h3>
  <table>
   <tr><th style="width:30%">Setting</th><th>Value</th></tr>
   <tr><td>Campaign name</td><td><code>COOKOUT_TOFU_Leads</code></td></tr>
   <tr><td>Objective</td><td>Leads</td></tr>
   <tr><td>Conversion location</td><td>Website (no instant forms: we need leads to land in our system, and instant form leads don't)</td></tr>
-  <tr><td>Dataset and event</td><td>The Cookout, <b>Lead</b></td></tr>
+  <tr><td>Dataset and event</td><td>The Cookout KL, <b>Lead</b></td></tr>
   <tr><td>Performance goal</td><td>Maximise number of conversions</td></tr>
   <tr><td>Ad set name</td><td><code>KL30km_18-40_AdvPlus</code></td></tr>
-  <tr><td>Location</td><td>Kuala Lumpur, plus 30 km radius (covers PJ, Subang, Cheras, Mont Kiara)</td></tr>
-  <tr><td>Age</td><td>18 to 40</td></tr>
+  <tr><td>Location, age, language</td><td>Kuala Lumpur plus 30 km (covers PJ, Subang, Cheras, Mont Kiara), 18 to 40, English</td></tr>
   <tr><td>Audience</td><td>Advantage+ audience, with these suggestions: Afrobeats, Amapiano, Hip hop music, Contemporary R&amp;B, Streetwear, Pickleball, Nightlife, Street food</td></tr>
-  <tr><td>Language</td><td>English</td></tr>
   <tr><td>Placements</td><td>Advantage+ placements</td></tr>
-  <tr><td>Schedule</td><td>Start now. End Saturday 10 October, 4PM.</td></tr>
+  <tr><td>Schedule</td><td>Publish today, Wed 30 Sep, so review clears overnight. End Saturday 10 October, 4PM.</td></tr>
   <tr><td>Advantage+ creative</td><td>Turn <b>off</b> text improvements and generated text. Meta's rewrites can add claims we can't back up.</td></tr>
  </table>
- <h3>Campaign 2: Retargeting (Start Thursday 1 October)</h3>
- <p>Audience: website visitors in the last 14 days from our dataset, plus anyone who triggered InitiateCheckout. Exclude nobody for now: we can't see purchases, and a reminder to buyers is harmless. Destination: <code>https://thecookoutevent.com/tickets</code> with the same URL parameters. This campaign can show prices and the Early Bird countdown. We'll send creative and copy for it by Wednesday night.</p>
- <h3>Timeline</h3>
- <div class="flow">
-  <div><b>30 Sep to 2 Oct</b>Cold ads drive sign-ups. Retargeting pushes the Early Bird deadline, Fri 11:59PM.</div>
-  <div><b>3 to 9 Oct</b>Cold ads keep going. Retargeting moves to RM 85 and "Don't miss it".</div>
-  <div><b>10 Oct</b>"Tonight" push until 4PM doors. Tickets stay on sale online.</div>
- </div>
+ <h3>Campaign 2: Retargeting (Build Thursday, Starts Fri 2 Oct, 8AM)</h3>
+ <table>
+  <tr><th style="width:30%">Setting</th><th>Value</th></tr>
+  <tr><td>Campaign name</td><td><code>COOKOUT_RT_Tickets</code></td></tr>
+  <tr><td>Objective</td><td>Traffic, performance goal Maximise landing page views (the audience is too small to optimise for a conversion)</td></tr>
+  <tr><td>Audience</td><td>Website visitors, last 14 days (dataset The Cookout KL), plus people who watched 50% of the hype video. Exclude nobody: we can't see purchases, and a reminder to a buyer is harmless.</td></tr>
+  <tr><td>Destination</td><td><code>https://thecookoutevent.com/tickets</code> with the same URL parameters. This campaign shows prices and deadlines (copy in section 6).</td></tr>
+ </table>
+ <h3>Budget Schedule (Daily Budgets, About RM 1,900 In Total)</h3>
+ <table>
+  <tr><th style="width:24%">Dates</th><th style="width:17%">Campaign 1</th><th style="width:17%">Campaign 2</th><th>Why</th></tr>
+  <tr><td><b>Thu 1 to Fri 2 Oct</b></td><td>RM 200 a day</td><td>Fri only: RM 40</td><td>Early Bird ends Fri 11:59PM. The strongest 2 days.</td></tr>
+  <tr><td><b>Sat 3 to Tue 6 Oct</b></td><td>RM 150 a day</td><td>RM 40 a day</td><td>Keep the list growing at RM 85.</td></tr>
+  <tr><td><b>Wed 7 to Sat 10 Oct</b></td><td>RM 120 a day</td><td>RM 60 a day</td><td>Final push to people who already know about it. Both end Sat 4PM.</td></tr>
+  <tr><td><b>Totals</b></td><td>RM 1,480</td><td>RM 440</td><td>About RM 1,920, a little less as Saturday stops at 4PM.</td></tr>
+ </table>
+ <p>These planned changes are fine even where they're over 20%. Any other change, ask Donny first.</p>
 </section>
