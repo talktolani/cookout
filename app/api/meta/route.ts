@@ -111,7 +111,10 @@ export async function POST(req: Request) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
       })
-      if (!res.ok) console.error('meta capi', t.id, res.status, (await res.text()).slice(0, 500))
+      // Log both outcomes: Vercel's runtime logs are the only place to prove a
+      // dataset's token works, and a quiet log proves nothing.
+      if (!res.ok) console.error('meta capi', t.id, name, res.status, (await res.text()).slice(0, 500))
+      else console.log('meta capi ok', t.id, name, (await res.text()).slice(0, 80))
     } catch (e) {
       console.error('meta capi fetch failed', t.id, String(e).slice(0, 200))
     }
