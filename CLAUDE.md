@@ -291,6 +291,10 @@ cookout_email_sends, cookout_buyers, cookout-postmark-webhook.
   the measurement also goes to Bunker 1965. Verified 30 Sep with a mock Graph
   server: PageView and ViewContent reached both IDs with matching event_ids.
   Bunker's dataset "The Cookout KL" is 28544942708504204, switched on 30 Sep.
+  META_PARTNER_CAPI_TOKEN added by Donny the same day; verified 30 Sep 08:29
+  UTC: Vercel runtime logs showed "meta capi ok" with events_received 1 for
+  both datasets. The route logs every send, ok or not, so search the runtime
+  logs for "meta capi" to check a token.
 - **Testing with a local `next start`:** stop old servers by PID (`ps aux |
   grep next-server`), never `pkill -f "next start ..."`. pkill matches the
   shell running it and kills the command, and a stale server left on the port
