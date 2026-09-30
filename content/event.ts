@@ -18,17 +18,21 @@ export const TICKETS = {
   earlyBird: {
     name: 'Early Bird',
     price: 'RM 65',
-    closes: '2 October',
+    closes: '5 October',
     // Used by the live countdown. Real deadline, not a rolling timer.
-    // The date itself is a proposal (see the block comment above) until
-    // Donny confirms it. If it changes, update this and the copy below.
-    closesISO: '2026-10-02T23:59:59+08:00',
-    note: 'Runs through 2 October. The price rises after that, whether it has sold out or not.',
+    // Donny extended it from Fri 2 Oct to Mon 5 Oct on 30 Sep, because the
+    // Meta ads only went live on 1 Oct. If it moves again, change closes,
+    // closesISO and ga.from/fromISO together; every page, the countdown, the
+    // OG image, the schema and the Meta event values read from here.
+    closesISO: '2026-10-05T23:59:59+08:00',
+    note: 'Runs through 5 October. The price rises after that, whether it has sold out or not.',
   },
   ga: {
     name: 'General Admission',
     price: 'RM 85',
-    note: 'From 3 October, online, right up until doors.',
+    from: '6 October',
+    fromISO: '2026-10-06T00:00:00+08:00',
+    note: 'From 6 October, online, right up until doors.',
   },
   door: { name: 'At The Door', price: 'RM 100', note: 'On the night, at the venue.' },
 } as const

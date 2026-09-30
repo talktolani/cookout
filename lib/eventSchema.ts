@@ -36,7 +36,7 @@ export const EVENT_SCHEMA = {
     {
       '@type': 'Offer', name: TICKETS.ga.name, price: rm(TICKETS.ga.price), priceCurrency: 'MYR',
       availability: 'https://schema.org/InStock', url: `${BASE}/tickets`,
-      validFrom: '2026-10-03T00:00:00+08:00', validThrough: `${EVENT.dateISO}T16:00:00+08:00`,
+      validFrom: TICKETS.ga.fromISO, validThrough: `${EVENT.dateISO}T16:00:00+08:00`,
     },
   ],
 }

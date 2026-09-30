@@ -121,7 +121,7 @@ export const SALES = {
     lead: 'Same night on every ticket. The only difference is when you buy.',
     tiers: [
       { name: 'Early Bird', price: PRICE, note: `Through ${TICKETS.earlyBird.closes}`, feature: true },
-      { name: 'General Admission', price: nb(TICKETS.ga.price), note: 'From 3 October', feature: false },
+      { name: 'General Admission', price: nb(TICKETS.ga.price), note: `From ${TICKETS.ga.from}`, feature: false },
       { name: 'At The Door', price: nb(TICKETS.door.price), note: "If there's room on the night", feature: false },
     ],
     cta: 'Buy Tickets',
@@ -129,7 +129,7 @@ export const SALES = {
   },
 
   faq: [
-    { q: 'How much is a ticket?', a: `Early Bird is ${PRICE} through ${TICKETS.earlyBird.closes}. General Admission is ${nb(TICKETS.ga.price)} from 3 October, and it's ${nb(TICKETS.door.price)} at the door.` },
+    { q: 'How much is a ticket?', a: `Early Bird is ${PRICE} through ${TICKETS.earlyBird.closes}. General Admission is ${nb(TICKETS.ga.price)} from ${TICKETS.ga.from}, and it's ${nb(TICKETS.door.price)} at the door.` },
     { q: 'Do I have to be good at pickleball?', a: "No. The tournament's casual, in pairs, and every level's welcome. Plenty of people will be playing for the first time." },
     { q: 'Can I come on my own?', a: "Yes. Plenty of people will. If you want to play, tell us you need a partner and we'll match you on the day." },
     { q: 'What time should I get there?', a: `Doors open at ${EVENT.doors}. The food's at its best early and the brackets run through the afternoon.` },

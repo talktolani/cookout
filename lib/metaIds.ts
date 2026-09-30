@@ -13,6 +13,7 @@
 
 export const PIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID || '1092247383161339'
 
-export const PARTNER_PIXEL_ID = process.env.NEXT_PUBLIC_META_PARTNER_PIXEL_ID || ''
+// "The Cookout KL" in Bunker 1965's business, ID sent by Donny 30 Sep.
+export const PARTNER_PIXEL_ID = process.env.NEXT_PUBLIC_META_PARTNER_PIXEL_ID || '28544942708504204'
 
 export const PIXEL_IDS = [PIXEL_ID, PARTNER_PIXEL_ID].filter((id) => /^\d{10,20}$/.test(id))
