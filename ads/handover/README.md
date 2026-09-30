@@ -7,7 +7,8 @@ and printed to A4 with Playwright in the Higgsfield sandbox, where the live
 site and TicketMelon can be screenshotted (this container can't reach them).
 
 v1 PDF (superseded, says no BBQ): https://d2ol7oe51mr4n9.cloudfront.net/user_3BCuYCQwnreJpxyBr1ZoHKJc0Ay/cc7ba108-cb6b-4dd6-9165-aeb19f13831a.pdf
-v3 PDF (30 Sep, current: Bunker's own dataset, Bunker Page and Instagram, Thu 1 Oct launch, budget schedule, retargeting copy): https://d2ol7oe51mr4n9.cloudfront.net/user_3BCuYCQwnreJpxyBr1ZoHKJc0Ay/7a28cec3-ca07-43b1-a04c-58b2b211fc25.pdf
+v4 PDF (30 Sep, current: RM 1,400 budget, Early Bird to Mon 5 Oct, Bunker dataset 28544942708504204 live): https://d2ol7oe51mr4n9.cloudfront.net/user_3BCuYCQwnreJpxyBr1ZoHKJc0Ay/f0511963-f578-4e2a-bd69-5493a10b4529.pdf
+v3 PDF (30 Sep, superseded: Bunker's own dataset, Bunker Page and Instagram, Thu 1 Oct launch, budget schedule, retargeting copy): https://d2ol7oe51mr4n9.cloudfront.net/user_3BCuYCQwnreJpxyBr1ZoHKJc0Ay/7a28cec3-ca07-43b1-a04c-58b2b211fc25.pdf
 v2 PDF (29 Sep, superseded): https://d2ol7oe51mr4n9.cloudfront.net/user_3BCuYCQwnreJpxyBr1ZoHKJc0Ay/d7cb491a-1673-4496-81a4-5e00741f40cd.pdf
 
 Lessons:
@@ -31,3 +32,7 @@ Lessons:
   `page.images` gives them back in placement order (page 6 frames, page 8
   shots: 01, 02, 03, 04, 07, 05, 06). Fonts: npm @fontsource league-gothic,
   oswald, montserrat. Playwright needs NODE_PATH=$(npm root -g).
+- Small revisions: keep the edits as one Python list of (old, new) pairs,
+  each asserted to match exactly once, and run the same script on the repo
+  source and on the sandbox's handover.html (compare md5 of the script).
+  Cheaper and safer than re-sending the whole HTML.
