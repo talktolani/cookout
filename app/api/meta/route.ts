@@ -4,13 +4,23 @@ import { createHash } from 'node:crypto'
 // same event_id). Runs on Node, like app/c/route.ts: do not add
 // `export const runtime`.
 //
-// Needs META_CAPI_TOKEN (Events Manager > dataset > Settings > Conversions
-// API > Generate access token). Without it this answers 204 and sends
-// nothing, so the site works before the token exists. META_TEST_EVENT_CODE,
-// when set, routes every event to Events Manager's Test events tab: remove it
-// once verified or real events never count.
+// Sends to every dataset in lib/metaIds.ts that has a token:
+//   ours     META_CAPI_TOKEN          (+ META_TEST_EVENT_CODE)
+//   partner  META_PARTNER_CAPI_TOKEN  (+ META_PARTNER_TEST_EVENT_CODE)
+// Tokens come from Events Manager > dataset > Settings > Conversions API >
+// Generate access token, created by an admin of the business that owns the
+// dataset. A dataset without a token still gets the browser pixel. With no
+// tokens at all this answers 204 and sends nothing. A test event code routes
+// that dataset's events to its Test events tab: remove it once verified or
+// real events never count there.
 
-const PIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID ?? '1092247383161339'
+import { PIXEL_ID, PARTNER_PIXEL_ID, PIXEL_IDS } from '@/lib/metaIds'
+
+const TARGETS = [
+  { id: PIXEL_ID, token: process.env.META_CAPI_TOKEN, test: process.env.META_TEST_EVENT_CODE },
+  { id: PARTNER_PIXEL_ID, token: process.env.META_PARTNER_CAPI_TOKEN, test: process.env.META_PARTNER_TEST_EVENT_CODE },
+].filter((t) => PIXEL_IDS.includes(t.id) && t.token) as { id: string; token: string; test?: string }[]
+
 const GRAPH = process.env.META_GRAPH_URL ?? 'https://graph.facebook.com/v23.0' // override only for local tests
 const ALLOWED = new Set(['PageView', 'ViewContent', 'Lead', 'InitiateCheckout'])
 
@@ -34,8 +44,7 @@ function cookie(header: string | null, name: string): string | undefined {
 }
 
 export async function POST(req: Request) {
-  const token = process.env.META_CAPI_TOKEN
-  if (!token) return new Response(null, { status: 204 })
+  if (!TARGETS.length) return new Response(null, { status: 204 })
 
   let b: Record<string, unknown>
   try {
@@ -83,28 +92,29 @@ export async function POST(req: Request) {
 
   const custom = b.custom && typeof b.custom === 'object' ? (b.custom as Record<string, unknown>) : {}
 
-  const payload: Record<string, unknown> = {
-    data: [{
-      event_name: name,
-      event_time: Math.floor(Date.now() / 1000),
-      event_id: id,
-      action_source: 'website',
-      event_source_url: url,
-      user_data: ud,
-      custom_data: custom,
-    }],
+  const event = {
+    event_name: name,
+    event_time: Math.floor(Date.now() / 1000),
+    event_id: id,
+    action_source: 'website',
+    event_source_url: url,
+    user_data: ud,
+    custom_data: custom,
   }
-  if (process.env.META_TEST_EVENT_CODE) payload.test_event_code = process.env.META_TEST_EVENT_CODE
 
-  try {
-    const res = await fetch(`${GRAPH}/${PIXEL_ID}/events?access_token=${encodeURIComponent(token)}`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
-    })
-    if (!res.ok) console.error('meta capi', res.status, (await res.text()).slice(0, 500))
-  } catch (e) {
-    console.error('meta capi fetch failed', String(e).slice(0, 200))
-  }
+  await Promise.all(TARGETS.map(async (t) => {
+    const payload: Record<string, unknown> = { data: [event] }
+    if (t.test) payload.test_event_code = t.test
+    try {
+      const res = await fetch(`${GRAPH}/${t.id}/events?access_token=${encodeURIComponent(t.token)}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      })
+      if (!res.ok) console.error('meta capi', t.id, res.status, (await res.text()).slice(0, 500))
+    } catch (e) {
+      console.error('meta capi fetch failed', t.id, String(e).slice(0, 200))
+    }
+  }))
   return new Response(null, { status: 204 })
 }

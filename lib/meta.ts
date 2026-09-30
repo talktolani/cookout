@@ -11,7 +11,9 @@
  * in the browser, never stored.
  */
 
-export const PIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID ?? '1092247383161339'
+import { PIXEL_IDS } from './metaIds'
+
+export { PIXEL_ID, PARTNER_PIXEL_ID } from './metaIds'
 
 export type MetaEventName = 'PageView' | 'ViewContent' | 'Lead' | 'InitiateCheckout'
 
@@ -64,7 +66,7 @@ let booted: Promise<void> | null = null
 function boot(): Promise<void> {
   if (booted) return booted
   booted = (async () => {
-    if (!PIXEL_ID || typeof window === 'undefined') return
+    if (!PIXEL_IDS.length || typeof window === 'undefined') return
     if (!window.fbq) {
       const n = function (...args: unknown[]) {
         if (n.callMethod) n.callMethod(...args)
@@ -82,7 +84,9 @@ function boot(): Promise<void> {
       document.head.appendChild(s)
     }
     const ext = await visitorHash()
-    window.fbq('init', PIXEL_ID, ext ? { external_id: ext } : {})
+    // One init per dataset. After this every fbq('track') goes to all of them
+    // with the same eventID, so each dataset dedupes against its server copy.
+    for (const id of PIXEL_IDS) window.fbq('init', id, ext ? { external_id: ext } : {})
   })()
   return booted
 }
@@ -100,7 +104,7 @@ export async function metaEvent(
   custom: Record<string, unknown> = {},
   user: MetaUser = {}
 ) {
-  if (typeof window === 'undefined' || !PIXEL_ID) return
+  if (typeof window === 'undefined' || !PIXEL_IDS.length) return
   if (navigator.webdriver) return // headless bots and our own screenshot runs
   await boot()
   const id = eventId()
