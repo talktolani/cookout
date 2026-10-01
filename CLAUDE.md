@@ -374,3 +374,28 @@ cookout_email_sends, cookout_buyers, cookout-postmark-webhook.
   notification ("KL, you free Saturday?" / "10 October?"), 9 shots in the
   first 6s, a cut on every beat (~0.6s at ~103 BPM), double speed on the
   turn to the party, 2 to 4 words per card, QR end card for about 2s.
+
+## TicketMelon purchases reach Meta (added 1 Oct 2026)
+
+- **app/api/meta/purchase** sends a Purchase to both datasets for every paid
+  TicketMelon order. AIOS marks buyers by hand with `cookout_mark_buyers`,
+  each row carrying `order_no`, `total`, `quantity` and `bought_at`; a paid
+  order becomes a `cookout_purchases` row, and a database trigger POSTs that
+  row's one-time `{token}` here. The route claims the event
+  (`cookout_purchase_claim`, details arrive already hashed), sends it through
+  lib/metaCapi.ts and reports back (`cookout_purchase_report`). event_id is
+  `purchase:<order_no>`. RM 0.00 guest list orders never become purchases.
+- **Every form saves `_ua`, `_fbp`, `_fbc` and `_ext`** (lib/meta.ts
+  metaContext, added in lib/submit.ts). A buyer who signed up here first goes
+  to Meta as a website event tied to their ad click; anyone else goes as
+  system_generated. Flat keys only: the capture endpoint stores every field as
+  a string. /privacy says this; keep it in step.
+
+## Add To Calendar (added 1 Oct 2026)
+
+- **The emails' Add To Calendar button opens /calendar**, a page with Google
+  Calendar, Apple Calendar (public/the-cookout.ics) and Outlook buttons. A
+  button in an email cannot add an event by itself, and a bare .ics link does
+  nothing useful on Android or in Gmail, which is why it no longer points at
+  the .ics directly. Event times live in EVENT.calendar and the .ics; change
+  both if the date or hours move.

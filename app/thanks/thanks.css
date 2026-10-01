@@ -33,3 +33,8 @@ main.ty-page .ty-cards{max-width:900px}
 }
 main.ty-page .ty-big{text-shadow:0 0 .024em rgba(255,255,255,.3),0 0 .065em rgba(255,255,255,.3),0 0 .11em rgba(255,255,255,.3),0 0 .24em rgba(139,230,67,.3),0 0 .48em rgba(139,230,67,.3),0 0 .54em rgba(139,230,67,.3),0 0 .6em rgba(139,230,67,.3),0 0 .9em rgba(139,230,67,.3);animation:cookout-flicker 3s infinite alternate}
 @media(prefers-reduced-motion:reduce){main.ty-page .ty-big{animation:none}}
+/* /calendar: one card, buttons stacked full width */
+main.ty-page .ty-cards.ty-cards-one{grid-template-columns:1fr;max-width:420px}
+main.ty-page .ty-actions.ty-actions-stack{flex-direction:column;flex-wrap:nowrap}
+main.ty-page .ty-actions.ty-actions-stack .ty-pill{width:100%}
+main.ty-page .ty-card p.ty-note{font-size:13px;color:var(--mute);margin:16px 0 0;text-align:center}

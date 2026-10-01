@@ -44,4 +44,22 @@ export const CALENDAR = {
     `${EVENT.venue}, ${EVENT.city}`
   )}&details=${encodeURIComponent('Barbecue, games, pickleball, 90s R&B, Afrobeats and Amapiano. ' + SITE)}`,
   ics: '/the-cookout.ics',
+  outlook: `https://outlook.live.com/calendar/0/action/compose?subject=${encodeURIComponent(
+    'The Cookout'
+  )}&startdt=${encodeURIComponent('2026-10-10T16:00:00+08:00')}&enddt=${encodeURIComponent(
+    '2026-10-11T00:00:00+08:00'
+  )}&location=${encodeURIComponent(`${EVENT.venue}, ${EVENT.city}`)}&body=${encodeURIComponent(
+    'Barbecue, games, pickleball, 90s R&B, Afrobeats and Amapiano. ' + SITE
+  )}`,
+}
+
+// /calendar: where the emails' Add To Calendar button lands. An email can't
+// add an event by itself, so this page offers each calendar app its own way in.
+export const CALENDAR_PAGE = {
+  big: 'Save The Date',
+  sub: `${EVENT.date}, ${EVENT.timeRange} at ${EVENT.venue}. Pick your calendar and tap Save.`,
+  google: 'Google Calendar',
+  apple: 'Apple Calendar',
+  outlook: 'Outlook',
+  note: 'Apple Calendar opens the event on iPhone and Mac. On Android, use Google Calendar.',
 }
