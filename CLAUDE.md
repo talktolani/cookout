@@ -202,8 +202,27 @@ cookout_email_sends, cookout_buyers, cookout-postmark-webhook.
   reaches more than 6 hours late is skipped (expires_at). The price line is a
   dated merge field on the workflow (RM 65 until 2 Oct 23:59 MYT, then RM 85).
   **Early Bird moved to Mon 5 Oct 23:59 MYT on 30 Sep** (site: content/event.ts).
-  The AIOS merge field and any dated Early Bird steps still say 2 Oct until
-  someone changes them in the Workflow builder.
+  On 1 Oct the AIOS price line, the dated Early Bird steps (EB tomorrow Sun 4
+  Oct 7PM, RM 65 tonight Mon 5 Oct 6PM, win-back Wed 7 Oct 7PM) and both
+  countdown designs were moved to match. Move them together if it moves again.
+
+### Email is live (1 Oct 2026)
+
+- **Sender:** Postmark server "The Cookout" (21062288), from
+  hello@thecookoutevent.com, crm_client_senders enabled on Donny's instruction.
+  DNS for thecookoutevent.com is managed in **GoHighLevel** (Lani AI LLC
+  sub-account > Settings > Domains & URL Redirects), not Cloudflare: DKIM
+  20261001033916pm._domainkey, CNAME pm-bounces -> pm.mtasv.net, and
+  _dmarc p=none sit there next to Vercel's 2 CNAMEs.
+- **Replies:** hello@ has no MX yet. Donny is setting up a Google Workspace
+  mailbox for it; its MX and verification TXT go in GoHighLevel too.
+- **WhatsApp steps are routed around** until a number and approved templates
+  exist (AIOS migration 20261001041000 lists the edges to restore).
+- **Buyers come from TicketMelon by hand:** `select
+  public.cookout_mark_buyers('[{"email":"...","first_name":"..."}]', <bought_at>)`
+  tags ticket-buyer, which ends Welcome and starts Buyers.
+- **Email logo:** public/email/cookout-logo.png (THE / COOKOUT! on navy) is what
+  every design's logo block shows. Don't move or rename it.
 
 ## WhatsApp number field with country flags (added 27 Sep 2026)
 
