@@ -129,6 +129,37 @@ export async function metaEvent(
   } catch {}
 }
 
+function readCookie(name: string): string {
+  const m = document.cookie.match(new RegExp(`(?:^|;\\s*)${name}=([^;]+)`))
+  return m ? decodeURIComponent(m[1]) : ''
+}
+
+// Saved with every form (lib/submit.ts) so a ticket bought later on
+// TicketMelon can be reported to Meta as this browser's Purchase
+// (app/api/meta/purchase): the user agent Meta requires for a website event,
+// Meta's own _fbp/_fbc cookies (the ad click), and the hashed visitor id the
+// pixel already uses as external_id. Flat string keys: the capture endpoint
+// stores every field as a string.
+export async function metaContext(): Promise<Record<string, string>> {
+  if (typeof window === 'undefined') return {}
+  try {
+    let fbc = readCookie('_fbc')
+    if (!fbc) {
+      const clid = new URLSearchParams(location.search).get('fbclid')
+      if (clid) fbc = `fb.1.${Date.now()}.${clid}`
+    }
+    const out: Record<string, string> = { _ua: navigator.userAgent.slice(0, 500) }
+    const fbp = readCookie('_fbp')
+    if (fbp) out._fbp = fbp
+    if (fbc) out._fbc = fbc.slice(0, 500)
+    const ext = await visitorHash()
+    if (ext) out._ext = ext
+    return out
+  } catch {
+    return {}
+  }
+}
+
 export function userFromFields(fields: Record<string, unknown>): MetaUser {
   const s = (k: string) => (typeof fields[k] === 'string' ? (fields[k] as string).trim() : '')
   return {

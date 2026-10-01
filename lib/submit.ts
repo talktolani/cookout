@@ -1,5 +1,5 @@
 import { track } from './analytics'
-import { metaEvent, userFromFields } from './meta'
+import { metaContext, metaEvent, userFromFields } from './meta'
 
 const ENDPOINT = process.env.NEXT_PUBLIC_CAPTURE_ENDPOINT ?? ''
 
@@ -47,7 +47,8 @@ export async function submitForm(
       body: JSON.stringify({
         form,
         page: typeof window !== 'undefined' ? location.pathname : '',
-        fields,
+        // Browser context for a later TicketMelon Purchase (lib/meta.ts).
+        fields: { ...fields, ...(await metaContext()) },
         whatsapp_optin: whatsappOptIn,
         marketing_optin: marketingOptIn,
         utm: utm(),

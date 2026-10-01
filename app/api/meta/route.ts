@@ -1,41 +1,11 @@
-import { createHash } from 'node:crypto'
-
 // Server half of the Meta pixel (lib/meta.ts sends the browser half with the
 // same event_id). Runs on Node, like app/c/route.ts: do not add
-// `export const runtime`.
-//
-// Sends to every dataset in lib/metaIds.ts that has a token:
-//   ours     META_CAPI_TOKEN          (+ META_TEST_EVENT_CODE)
-//   partner  META_PARTNER_CAPI_TOKEN  (+ META_PARTNER_TEST_EVENT_CODE)
-// Tokens come from Events Manager > dataset > Settings > Conversions API >
-// Generate access token, created by an admin of the business that owns the
-// dataset. A dataset without a token still gets the browser pixel. With no
-// tokens at all this answers 204 and sends nothing. A test event code routes
-// that dataset's events to its Test events tab: remove it once verified or
-// real events never count there.
+// `export const runtime`. Datasets, tokens, hashing and the send itself live
+// in lib/metaCapi.ts, shared with app/api/meta/purchase.
 
-import { PIXEL_ID, PARTNER_PIXEL_ID, PIXEL_IDS } from '@/lib/metaIds'
+import { TARGETS, norm, sendEvent, sha } from '@/lib/metaCapi'
 
-const TARGETS = [
-  { id: PIXEL_ID, token: process.env.META_CAPI_TOKEN, test: process.env.META_TEST_EVENT_CODE },
-  { id: PARTNER_PIXEL_ID, token: process.env.META_PARTNER_CAPI_TOKEN, test: process.env.META_PARTNER_TEST_EVENT_CODE },
-].filter((t) => PIXEL_IDS.includes(t.id) && t.token) as { id: string; token: string; test?: string }[]
-
-const GRAPH = process.env.META_GRAPH_URL ?? 'https://graph.facebook.com/v23.0' // override only for local tests
 const ALLOWED = new Set(['PageView', 'ViewContent', 'Lead', 'InitiateCheckout'])
-
-const sha = (v: string) => createHash('sha256').update(v).digest('hex')
-
-function norm(kind: 'em' | 'ph' | 'name' | 'country', v: unknown): string | null {
-  if (typeof v !== 'string') return null
-  let s = v.trim().toLowerCase()
-  if (!s) return null
-  if (kind === 'ph') s = s.replace(/\D/g, '') // E.164 without the +
-  if (kind === 'name') s = s.normalize('NFKD').replace(/[^\p{L}]/gu, '')
-  if (kind === 'country') s = s.slice(0, 2)
-  if (kind === 'em' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s)) return null
-  return s || null
-}
 
 function cookie(header: string | null, name: string): string | undefined {
   if (!header) return
@@ -102,22 +72,6 @@ export async function POST(req: Request) {
     custom_data: custom,
   }
 
-  await Promise.all(TARGETS.map(async (t) => {
-    const payload: Record<string, unknown> = { data: [event] }
-    if (t.test) payload.test_event_code = t.test
-    try {
-      const res = await fetch(`${GRAPH}/${t.id}/events?access_token=${encodeURIComponent(t.token)}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      })
-      // Log both outcomes: Vercel's runtime logs are the only place to prove a
-      // dataset's token works, and a quiet log proves nothing.
-      if (!res.ok) console.error('meta capi', t.id, name, res.status, (await res.text()).slice(0, 500))
-      else console.log('meta capi ok', t.id, name, (await res.text()).slice(0, 80))
-    } catch (e) {
-      console.error('meta capi fetch failed', t.id, String(e).slice(0, 200))
-    }
-  }))
+  await sendEvent(event)
   return new Response(null, { status: 204 })
 }
