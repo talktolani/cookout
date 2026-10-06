@@ -399,3 +399,48 @@ cookout_email_sends, cookout_buyers, cookout-postmark-webhook.
   nothing useful on Android or in Gmail, which is why it no longer points at
   the .ics directly. Event times live in EVENT.calendar and the .ics; change
   both if the date or hours move.
+
+## No brisket (Donny, 5 Oct 2026)
+Brisket is not on the menu, so no email cover, ad or post may show it. The
+first cover stills (p6, s1) were prompted with brisket and short ribs; the
+win-back and Day By Day email covers now use hf job 887b92a9 (burgers, fried
+chicken sandwiches, tenders, jollof rice and chicken, hot dog, grill smoke, no
+people, no soft drink brands). Prompt new food stills with confirmed foods
+only and check the picture for brands and headscarves before using it.
+
+## Guest uploads: /share (added 6 Oct 2026, on Donny's instruction)
+
+- **/share is where the table cards' QR code lands.** Guests send photos and
+  videos to a PRIVATE Supabase bucket (`guest-uploads`) and cannot see anyone
+  else's. A shared Drive folder shows every upload to every uploader, which is
+  why it is not Drive. Page copy is content/share.ts, the uploader is
+  components/ShareUploader.tsx, styling is app/share/share.css. It is
+  `robots: noindex` and has no link from the site: only the QR reaches it.
+- **How an upload works.** The page POSTs `{action:'sign', files:[{name,size,
+  type}], name, handle, visitor_id, batch_id}` to AIOS `site-upload`
+  (NEXT_PUBLIC_UPLOAD_ENDPOINT overrides the URL) and gets one signed upload
+  URL per file. The browser PUTs each file straight to Storage as multipart
+  with `cacheControl` and the file under an empty key, plus `x-upsert: false`,
+  exactly as supabase-js `uploadToSignedUrl` does. Then `{action:'done',
+  paths}` marks the rows uploaded after the function checks the object exists.
+  A big video never passes through a server of ours.
+- **The client is chosen by the Origin**, matched to `site_sites`
+  (thecookoutevent.com and www). A preview URL or localhost is a 403, so the
+  real round trip can only be tested on the live domain. Test the page's own
+  logic locally by routing the function and the Storage PUT in Playwright.
+- **Limits:** 40 files a visit, 10 files a call, 500 MB a file, images and
+  videos only (a phone sometimes hands over HEIC or MOV with an empty type, so
+  ShareUploader infers it from the extension; Storage refuses an unnamed type).
+  The function also caps 3,000 signed uploads a day per client and 60 an hour
+  per visitor. A `signed` row that never becomes `uploaded` is an abandoned
+  upload; the bytes may still be in the bucket.
+- **Where the files are.** Supabase dashboard > Storage > guest-uploads, under
+  `cookout/<date>/<batch>/<file>`. `site_uploads` has who sent what (name,
+  Instagram handle, original file name, size). Nothing is emailed or alerted
+  on an upload.
+- **No consent checkbox** (Donny: not needed). The page says "By sending files
+  you're happy for us to use them to promote The Cookout" and /privacy has a
+  paragraph. Keep both in step with what the page does.
+- **The page asks for no email or WhatsApp**, so it is not a lead form and
+  does not use PhoneField. If it ever collects a number, it must (see the
+  WhatsApp number field section).

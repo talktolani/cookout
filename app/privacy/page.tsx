@@ -16,6 +16,9 @@ export default function Privacy() {
       <h2>What we use it for</h2>
       <p>To send you your ticket link, the address, parking details and set times, and updates about the event you signed up for. You can stop WhatsApp messages at any time by replying STOP, and every email has an unsubscribe link.</p>
 
+      <h2>Photos and videos you send us</h2>
+      <p>If you send photos or videos on the Share page, they go to a private folder that only The Cookout team can open. Other guests can't see them. We keep the name and Instagram handle you type, if any, with your files, and we may use them to promote The Cookout.</p>
+
       <h2>Who else sees it</h2>
       <p>Tickets are sold through TicketMelon, which has its own privacy policy. We use Meta (Facebook and Instagram) to measure our ads: the Meta pixel on this site sets cookies, and when you sign up we send Meta your email and number in scrambled (hashed) form so it can tell which ads led to sign-ups. We keep your browser type and Meta's ad cookies with your sign-up, and when you buy a ticket on TicketMelon we tell Meta about the purchase (the order value and your hashed email and number) so it can tell which ads led to ticket sales. Our venue partner, Bunker 1965, runs some of our ads, so the same measurement also goes to Bunker 1965's Meta ad account, in the same hashed form. Meta never gets your details in readable form from us. We don't sell your details to anyone.</p>
 
