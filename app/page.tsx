@@ -3,7 +3,6 @@ import Media from '@/components/Media'
 import Carousel from '@/components/Carousel'
 import Faq from '@/components/Faq'
 import RegisterForm from '@/components/RegisterForm'
-import Ph from '@/components/Ph'
 import TicketCheckout from '@/components/TicketCheckout'
 import { keep90s } from '@/lib/keep90s'
 import {
@@ -102,7 +101,7 @@ export default function Home() {
           <div className="split">
             <div>
               <p>
-                {EVENT.venue}, <Ph>{EVENT.address}</Ph>. Parking is free and there&apos;s plenty of it.
+                {EVENT.venue}, {EVENT.address}. Parking is free and there&apos;s plenty of it.
                 The week of the event we&apos;ll send you a map, the gate to use, and a drop off pin for Grab.
               </p>
             </div>

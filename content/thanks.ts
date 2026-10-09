@@ -41,14 +41,14 @@ export const CALENDAR = {
   google: `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(
     'The Cookout'
   )}&dates=${EVENT.calendar.start}/${EVENT.calendar.end}&ctz=Asia/Kuala_Lumpur&location=${encodeURIComponent(
-    `${EVENT.venue}, ${EVENT.city}`
+    EVENT.calendarLocation
   )}&details=${encodeURIComponent('Barbecue, games, pickleball, 90s R&B, Afrobeats and Amapiano. ' + SITE)}`,
   ics: '/the-cookout.ics',
   outlook: `https://outlook.live.com/calendar/0/action/compose?subject=${encodeURIComponent(
     'The Cookout'
   )}&startdt=${encodeURIComponent('2026-10-10T16:00:00+08:00')}&enddt=${encodeURIComponent(
     '2026-10-11T00:00:00+08:00'
-  )}&location=${encodeURIComponent(`${EVENT.venue}, ${EVENT.city}`)}&body=${encodeURIComponent(
+  )}&location=${encodeURIComponent(EVENT.calendarLocation)}&body=${encodeURIComponent(
     'Barbecue, games, pickleball, 90s R&B, Afrobeats and Amapiano. ' + SITE
   )}`,
 }

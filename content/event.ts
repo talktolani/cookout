@@ -73,7 +73,9 @@ export const EVENT = {
   timeShort: '4PM - 12AM',
   venue: 'Bunker 1965',
   city: 'Kuala Lumpur',
-  address: '[ADDRESS]',
+  address: '46M, Jalan Lima, Chan Sow Lin, 55200 Kuala Lumpur',
+  // The Google Maps listing is "Red Warehouse Kuala Lumpur"; calendars get this full location.
+  calendarLocation: 'Red Warehouse (Bunker 1965), 46M, Jalan Lima, Chan Sow Lin, 55200 Kuala Lumpur',
   doorPrice: 'RM 100',
   calendar: {
     start: '20261010T160000',

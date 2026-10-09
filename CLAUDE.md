@@ -444,3 +444,14 @@ only and check the picture for brands and headscarves before using it.
 - **The page asks for no email or WhatsApp**, so it is not a lead form and
   does not use PhoneField. If it ever collects a number, it must (see the
   WhatsApp number field section).
+
+## Venue address and the Buyers emails (added 9 Oct 2026, from Donny)
+- **The venue is "Red Warehouse Kuala Lumpur" on Google Maps, also called Bunker 1965:**
+  46M, Jalan Lima, Chan Sow Lin, 55200 Kuala Lumpur (phone 012-302 8200).
+  `EVENT.address` is that street address and `EVENT.calendarLocation` is what
+  Google, Outlook and the .ics put in the Location field. Change them together.
+- **A merge field the workflow does not define holds the send.** The Buyers
+  emails use `{{street_address}}`, `{{gate_and_parking}}` (and the old thank-you
+  used `{{night_line}}`). With no value in the workflow's `merge_fields` the tick
+  parks the send at `unfilled_merge_fields` until it expires: the 8 Oct "2 days to
+  go" email never reached the 16 buyers this way. Defined 9 Oct in AIOS.
